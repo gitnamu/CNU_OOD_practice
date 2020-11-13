@@ -13,9 +13,7 @@ class cardBuilder {
   cardBuilder& setBgwang();
   cardBuilder& setSsangP();
   cardBuilder& setGodori();
-  cardBuilder& removeBgwang();
-  cardBuilder& removeSsangP();
-  cardBuilder& removeGodori();
+
   Card* build();
 
  private:
@@ -29,11 +27,11 @@ class cardBuilder {
   // 표준일러스트 기준 1~4.
   int special_ribbon_;
   // 홍단 == 1,청단 == 2,초단 == 3, 디폴트0
-  bool is_bgwang_;
+  bool is_bgwang_=0;
   // 비광이면 1(true). 그 외 카드는 0
-  bool is_ssang_p_;
+  bool is_ssang_p_=0;
   // 쌍피일시 true
-  bool is_godori_;
+  bool is_godori_=0;
   // 고도리 구성요소일시 true
 };
 #endif

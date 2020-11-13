@@ -49,18 +49,7 @@ cardBuilder& cardBuilder::setGodori() {
   is_godori_ = true;
   return *this;
 }
-cardBuilder& cardBuilder::removeBgwang() {
-  is_bgwang_ = false;
-  return *this;
-}
-cardBuilder& cardBuilder::removeSsangP() {
-  is_ssang_p_ = false;
-  return *this;
-}
-cardBuilder& cardBuilder::removeGodori() {
-  is_godori_ = false;
-  return *this;
-}
+
 Card* cardBuilder::build(){
   return new Card(card_type_, card_where_, card_month_, card_order_,
                   special_ribbon_, is_bgwang_, is_ssang_p_, is_godori_);
