@@ -3,7 +3,7 @@ void cardBuilder::reset() {
   card_type_ = 0;
   // 0 => NaN, 1 => ±¤, 2 => ¿­²ý, 3 => ´Ü, 4 => ÇÇ
   card_where_ = 0;
-  // 0 => Error, 1 => on Hands, 2 => on Fields, 3 => in Deck
+  // 0 => Error, 1 => on Hands, 2 => on ScoreField, 3 => on Fields, 4 => in Deck
   card_month_ = 0;
   // 1~12ÀÇ °ª. ¶Ë = 11, ºñ = 12
   card_order_ = 0;

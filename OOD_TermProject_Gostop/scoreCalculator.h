@@ -7,7 +7,7 @@ class scoreCalculator {
  public:
   explicit scoreCalculator(int score);
   explicit scoreCalculator();
-  int score();
+  int score(std::vector<Card>& scoreField);
  private:
   int score_;
 };
