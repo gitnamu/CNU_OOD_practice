@@ -6,8 +6,6 @@ void cardBuilder::reset() {
   // 0 => Error, 1 => on Hands, 2 => on Fields, 3 => in Deck
   card_month_ = 0;
   // 1~12의 값. 똥 = 11, 비 = 12
-  card_order_ = 0;
-  // 표준일러스트 기준 1~4.
   special_ribbon_ = 0;
   // 홍단 == 1,청단 == 2,초단 == 3, 디폴트0
   is_bgwang_ = false;
@@ -29,10 +27,6 @@ cardBuilder& cardBuilder::setMonth(int cardMonth) {
   card_month_ = cardMonth;
   return *this;
 }
-cardBuilder& cardBuilder::setOrder(int cardOrder) {
-  card_order_ = cardOrder;
-  return *this;
-}
 cardBuilder& cardBuilder::setRibbon(int cardRibbon) {
   special_ribbon_ = cardRibbon;
   return *this;
@@ -49,8 +43,15 @@ cardBuilder& cardBuilder::setGodori() {
   is_godori_ = true;
   return *this;
 }
+cardBuilder& cardBuilder::setName(std::string name) {
+  name_ = name;
+  return *this;
+}
 
 Card* cardBuilder::build(){
-  return new Card(card_type_, card_where_, card_month_, card_order_,
-                  special_ribbon_, is_bgwang_, is_ssang_p_, is_godori_);
+  Card* cardtore =
+      new Card(card_type_, card_where_, card_month_, special_ribbon_,
+               is_bgwang_, is_ssang_p_, is_godori_, name_);
+  reset();
+  return cardtore;
 }

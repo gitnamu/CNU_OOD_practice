@@ -144,6 +144,7 @@
     <ClCompile Include="cardBuilder.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scoreCalculator.cpp" />
+    <ClCompile Include="Deck.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
