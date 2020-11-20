@@ -51,6 +51,9 @@ cardBuilder& cardBuilder::setGodori() {
 }
 
 Card* cardBuilder::build(){
-  return new Card(card_type_, card_where_, card_month_, card_order_,
-                  special_ribbon_, is_bgwang_, is_ssang_p_, is_godori_);
+  Card* Cardtoreturn =
+      new Card(card_type_, card_where_, card_month_, card_order_,
+               special_ribbon_, is_bgwang_, is_ssang_p_, is_godori_);
+  reset();
+  return Cardtoreturn;
 }

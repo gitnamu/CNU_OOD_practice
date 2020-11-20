@@ -25,7 +25,7 @@ class cardBuilder {
   // 1~12의 값. 똥 = 11, 비 = 12
   int card_order_;
   // 표준일러스트 기준 1~4.
-  int special_ribbon_;
+  int special_ribbon_ =0;
   // 홍단 == 1,청단 == 2,초단 == 3, 디폴트0
   bool is_bgwang_=0;
   // 비광이면 1(true). 그 외 카드는 0
