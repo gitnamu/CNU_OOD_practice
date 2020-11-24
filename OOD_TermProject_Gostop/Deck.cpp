@@ -187,23 +187,23 @@ class Deck {
       *Card25, *Card26, *Card27, *Card28, *Card29, *Card30, *Card31, *Card32,
       *Card33, *Card34, *Card35, *Card36, *Card37, *Card38, *Card39, *Card40,
       *Card41, *Card42, *Card43, *Card44, *Card45, *Card46, *Card47, *Card48};
-  stack<Card*> deck;
-  std::vector<Card*> floor;
+  stack<Card*>* deck = new stack<Card*>;
+  std::vector<Card*>* floor = new vector<Card*>;
  public:
 
-  vector<Card*> GetFloor() { return floor; }
-  stack<Card*> GetDeck() { return deck; }
+  vector<Card*>*  GetFloor() { return floor; }
+  stack<Card*>* GetDeck() { return deck; }
   void prints() {
-    std::cout <<"현재 바닥의 패 수 : "<< floor.size()<<std::endl;
+    std::cout <<endl<<"----바닥에 깔려있는 패----"<<std::endl;
     int count = 0;  
     Card* card;
-    while (!floor.empty()) {
-      card = floor.back();
-      floor.pop_back();
+    while (!floor->empty()) {
+      card = floor->back();
+      floor->pop_back();
       std::cout << card->isName() << std::endl;
       count++;
     }
-    std::cout << count << "번 꺼냄";
+    std::cout << "--------------------------" << endl;
   }
   void Shuffle() { // 정리된 카드 배열 무작위로 스택에 푸쉬
     bool test[48];
@@ -217,7 +217,7 @@ class Deck {
         test[num] = true;
         arr[count] = num;
         tempCard = &cardset[num];
-        deck.push(tempCard);
+        deck->push(tempCard);
         count++;
       }
     }
