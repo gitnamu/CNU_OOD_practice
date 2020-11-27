@@ -2,6 +2,7 @@
 #include <string>
 #ifndef CARD_H
 #define CARD_H
+#include <iostream>
 class Card {
  public:
   explicit Card(int type, int where, int month, 

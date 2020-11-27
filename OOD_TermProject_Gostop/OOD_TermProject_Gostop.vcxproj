@@ -143,12 +143,14 @@
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="cardBuilder.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="scoreCalculator.cpp" />
     <ClCompile Include="Deck.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
     <ClInclude Include="cardBuilder.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="scoreCalculator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
