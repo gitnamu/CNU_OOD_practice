@@ -2,6 +2,7 @@
 
 #include "CardBuilder.h"
 #include "scoreCalculator.h"
+#include "player.h"
 int main() {
   std::cout << "GIT Synchronize Test" << std::endl;
   cardBuilder builder;
@@ -107,6 +108,33 @@ int main() {
   newCardVector.push_back(testCard20);
   newCardVector.push_back(testCard21);
   std::cout << "최종 점수 : " << calculator.score(newCardVector) << std::endl;
+
+  /* 김남호 player 점수 test */
+  Player player1 = Player::Player();
+  
+  player1.addScoreField(testCard01);
+  player1.addScoreField(testCard02);
+  player1.addScoreField(testCard03);
+  player1.addScoreField(testCard04);
+  player1.addScoreField(testCard05);
+  player1.addScoreField(testCard06);
+  player1.addScoreField(testCard07);
+  player1.addScoreField(testCard08);
+  player1.addScoreField(testCard09);
+  player1.addScoreField(testCard10);
+  player1.addScoreField(testCard11);
+  player1.addScoreField(testCard12);
+  player1.addScoreField(testCard13);
+  player1.addScoreField(testCard14);
+  player1.addScoreField(testCard15);
+  player1.addScoreField(testCard16);
+  player1.addScoreField(testCard17);
+  player1.addScoreField(testCard18);
+  player1.addScoreField(testCard19);
+  player1.addScoreField(testCard20);
+  player1.addScoreField(testCard21);
+
+  std::cout << "내 점수 : " << player1.myScore() << std::endl;
 
   class testClass {
    public:

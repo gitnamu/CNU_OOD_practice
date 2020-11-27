@@ -10,11 +10,12 @@ class Player {
   void addScoreField(Card* newCard);  // 카드를 딴 카드배열에 추가
   Card* giveCard(Card* looseCard);   // 상대방에게 카드 주기
   int myScore();    // 내 점수
+  Player();
 
   // Getters & Setters
   std::vector<Card*> handField();   // 손 패 반환
   void setHandField(std::vector<Card*> newCard);  // 처음 시작할때 손 패 얻기
-  std::vector<Card*> scoreField();    // 지금까지 딴 카드 반환
+  std::vector<Card*>* scoreField();    // 지금까지 딴 카드 반환
   int go();   // 내 go 횟수 반환
   void setGo(int goCount);  // 내 go 횟수 설정
   bool stop();  // 내 stop 여부 반환
