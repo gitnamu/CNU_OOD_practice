@@ -49,6 +49,10 @@ cardBuilder& cardBuilder::setGodori() {
   is_godori_ = true;
   return *this;
 }
+cardBuilder& cardBuilder::setName(std::string name) {
+  name_ = name;
+  return *this;
+}
 
 Card* cardBuilder::build(){
   Card* Cardtoreturn =
