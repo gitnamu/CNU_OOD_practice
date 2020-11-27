@@ -14,7 +14,6 @@ int main() {
   Card* newCard1 = builder.setType(2)
                        .setWhere(0)
                        .setMonth(9)
-                       .setOrder(1)
                        .setRibbon(0)
                        .build();  // 9¿ù1>¿­²ýÇÇ
   // newCard1->printAllData();
@@ -22,69 +21,64 @@ int main() {
   Card* testCard01 = builder.setType(1)
                          .setWhere(0)
                          .setMonth(12)
-                         .setOrder(1)
                          .setBgwang()
                          .build();  //ºñ±¤
   Card* testCard02 =
-      builder.setType(1).setWhere(0).setMonth(11).setOrder(1).build();  //¶Ë±¤
+      builder.setType(1).setWhere(0).setMonth(11).build();  //¶Ë±¤
   Card* testCard03 =
-      builder.setType(1).setWhere(0).setMonth(8).setOrder(1).build();  // 8¿ù±¤
+      builder.setType(1).setWhere(0).setMonth(8).build();  // 8¿ù±¤
   Card* testCard04 = builder.setType(3)
                          .setWhere(0)
                          .setMonth(4)
-                         .setOrder(2)
                          .setRibbon(3)
                          .build();  // 4¿ùÃÊ(2)
   Card* testCard05 = builder.setType(3)
                          .setWhere(0)
                          .setMonth(5)
-                         .setOrder(2)
                          .setRibbon(3)
                          .build();  // 5¿ùÃÊ(2)
   Card* testCard06 =
-      builder.setType(2).setWhere(0).setMonth(12).setOrder(2).build();  // 12¿ù
+      builder.setType(2).setWhere(0).setMonth(12).build();  // 12¿ù
                                                                         // ¿­²ý
   Card* testCard07 =
-      builder.setType(2).setWhere(0).setMonth(10).setOrder(1).build();  // 10¿ù
+      builder.setType(2).setWhere(0).setMonth(10).build();  // 10¿ù
                                                                         // ¿­²ý
   Card* testCard08 =
-      builder.setType(2).setWhere(0).setMonth(4).setOrder(1).build();  // 4¿ù
+      builder.setType(2).setWhere(0).setMonth(4).build();  // 4¿ù
                                                                        // ¿­²ý
   Card* testCard09 =
-      builder.setType(2).setWhere(0).setMonth(2).setOrder(1).build();  // 2¿ù
+      builder.setType(2).setWhere(0).setMonth(2).build();  // 2¿ù
                                                                        // ¿­²ý
   Card* testCard10 =
-      builder.setType(4).setWhere(0).setMonth(11).setOrder(4).build();  // 11-4
+      builder.setType(4).setWhere(0).setMonth(11).build();  // 11-4
   Card* testCard11 =
-      builder.setType(4).setWhere(0).setMonth(10).setOrder(3).build();  // 10-3
+      builder.setType(4).setWhere(0).setMonth(10).build();  // 10-3
   Card* testCard12 =
-      builder.setType(4).setWhere(0).setMonth(10).setOrder(4).build();  // 10-4
+      builder.setType(4).setWhere(0).setMonth(10).build();  // 10-4
   Card* testCard13 =
-      builder.setType(4).setWhere(0).setMonth(9).setOrder(3).build();  // 9-3
+      builder.setType(4).setWhere(0).setMonth(9).build();  // 9-3
   Card* testCard14 =
-      builder.setType(4).setWhere(0).setMonth(9).setOrder(4).build();  // 9-4
+      builder.setType(4).setWhere(0).setMonth(9).build();  // 9-4
   Card* testCard15 = builder.setType(4)
                          .setWhere(0)
                          .setMonth(12)
-                         .setOrder(4)
                          .setSsangP()
                          .build();  // 12-4(½ÖÇÇ)
   Card* testCard16 = builder.setType(4)
                          .setWhere(0)
                          .setMonth(9)
-                         .setOrder(1)
                          .setSsangP()
                          .build();  // 9-1(½ÖÇÇ)
   Card* testCard17 =
-      builder.setType(4).setWhere(0).setMonth(6).setOrder(4).build();  // 6-4
+      builder.setType(4).setWhere(0).setMonth(6).build();  // 6-4
   Card* testCard18 =
-      builder.setType(4).setWhere(0).setMonth(4).setOrder(4).build();  // 4-4
+      builder.setType(4).setWhere(0).setMonth(4).build();  // 4-4
   Card* testCard19 =
-      builder.setType(4).setWhere(0).setMonth(3).setOrder(3).build();  // 3-3
+      builder.setType(4).setWhere(0).setMonth(3).build();  // 3-3
   Card* testCard20 =
-      builder.setType(4).setWhere(0).setMonth(11).setOrder(3).build();  // 11-3
+      builder.setType(4).setWhere(0).setMonth(11).build();  // 11-3
   Card* testCard21 =
-      builder.setType(4).setWhere(0).setMonth(11).setOrder(2).setSsangP().build();  // 11-2
+      builder.setType(4).setWhere(0).setMonth(11).setSsangP().build();  // 11-2
 
   //newCardVector.push_back(newCard1);
   newCardVector.push_back(testCard01);
