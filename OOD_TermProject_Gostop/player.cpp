@@ -1,6 +1,6 @@
 
 #include"player.h"
-#include<iostream>
+#include "scoreCalculator.h"
 
   // 손에 있는 n번째 패 내기
   Card* Player::handOut(int n){
@@ -33,6 +33,13 @@
       return outCard;
     }
 
+  }
+
+  // 내 점수 반환
+  int Player::myScore() { 
+    scoreCalculator scoreC = scoreCalculator::scoreCalculator();
+    int score = scoreC.score(Player::scoreField());
+    return score;
   }
   
 

@@ -9,6 +9,7 @@ class Player {
   Card* handOut(int n);          // 손에 있는 n번째 패 내기
   void addScoreField(Card* newCard);  // 카드를 딴 카드배열에 추가
   Card* giveCard(Card* looseCard);   // 상대방에게 카드 주기
+  int myScore();    // 내 점수
 
   // Getters & Setters
   std::vector<Card*> handField();   // 손 패 반환
