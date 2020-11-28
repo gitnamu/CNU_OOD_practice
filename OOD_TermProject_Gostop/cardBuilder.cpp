@@ -49,9 +49,9 @@ cardBuilder& cardBuilder::setName(std::string name) {
 }
 
 Card* cardBuilder::build(){
-  Card* cardtore =
+  Card* cardtoreturn =
       new Card(card_type_, card_where_, card_month_, special_ribbon_,
                is_bgwang_, is_ssang_p_, is_godori_, name_);
   reset();
-  return cardtore;
+  return cardtoreturn;
 }
