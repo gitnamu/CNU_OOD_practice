@@ -1,6 +1,4 @@
 #include "Card.h"
-
-#include <iostream>
 Card::Card(int type, int where, int month, int specialRibbon,
            bool bgwang, bool ssangp, bool isgodori, std::string name)
     : card_type_(type),
