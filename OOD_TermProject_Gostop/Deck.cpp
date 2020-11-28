@@ -1,5 +1,7 @@
 #include "Deck.h"
+
 #include <time.h>
+
 #include <iostream>
 
 cardBuilder builder;
@@ -180,34 +182,148 @@ Card cardset[48] = {
     *Card33, *Card34, *Card35, *Card36, *Card37, *Card38, *Card39, *Card40,
     *Card41, *Card42, *Card43, *Card44, *Card45, *Card46, *Card47, *Card48};
 
-
 std::vector<Card*>* Deck::GetFloor() { return floor; }
 std::stack<Card*>* Deck::GetDeck() { return deck; }
-Deck::Deck()
-    : deck(new std::stack<Card*>),
-      floor(new std::vector<Card*>),
-      get(new std::vector<Card*>) {}
+Deck::Deck() : deck(new std::stack<Card*>), floor(new std::vector<Card*>) {}
 // 바닥 패 출력
 void Deck::prints() {
   std::cout << std::endl << "----바닥에 깔려있는 패----" << std::endl;
   int count = floor->size();
-  //std::cout << "플로어사이즈: " << count << std::endl;
-  /*Card* card;
-  while (!floor->empty()) {
-    card = floor->back();
-    floor->pop_back();
-    std::cout << card->isName() << std::endl;
-    count++;
-  }*/ 
-  // 보수 이전 코드 //
+  Card* card;
   for (int i = 0; i < count; i++) {
     std::cout << floor->at(i)->isName() << std::endl;
   }
   std::cout << "--------------------------" << std::endl;
 }
 
+void Deck::Run(Player turn, Player other1, Player other2,
+                              Card* n) {
+  std::vector<Card*>* get = new std::vector<Card*>;
+  int same = 0; // Handout한 패와 바닥패가 같을 때 count
+  int same2 = 0; // 뒤집은 패와 바닥패가 같을 때 count
+  int arr1[3], arr2[3];  // 같은 패의 index를 담고 있음
+
+  Card* fliped = deck->top();
+  deck->pop();
+  std::cout << "Fliped : "<<fliped->isName() << std::endl;
+  for (int i = 0; i < floor->size(); i++) {
+    if (floor->at(i)->cardMonth() == n->cardMonth()) {
+      arr1[same] = i;
+      same++;
+    }
+  }
+  for (int i = 0; i < floor->size(); i++) {
+    if (floor->at(i)->cardMonth() == fliped->cardMonth()) {
+      arr2[same2] = i;
+      same2++;
+    }
+  }
+  if (fliped->cardMonth() == n->cardMonth()) {  // Special Case는 Handout한 패와 뒤집은 패가 같을 때 발생
+    if (same == 0) {                            // 쪽
+      std::cout << "! 쪽 " << std::endl;
+      get->push_back(n);
+      get->push_back(fliped);
+    } else if (same == 1 ) {  // 뻑
+      std::cout << "! 뻑 " << std::endl;
+      floor->push_back(n);
+      floor->push_back(fliped);
+       // 바닥에 깔아둔다.
+    } else if (same == 2 ) {  // 따닥
+      std::cout << "! 따닥 " << std::endl;
+      get->push_back(n);
+      get->push_back(fliped);
+      get->push_back(floor->at(arr1[0]));
+      get->push_back(floor->at(arr1[1]));
+       // 4장의 카드 get에 넣고
+      floor->erase(floor->begin() + arr1[0]); 
+      floor->erase(floor->begin() + arr1[1]);
+       // 2장의 바닥패는 vector에서 삭제
+    }
+    other1.giveCard(&turn);
+    other2.giveCard(&turn);
+    // Special Case : 다른 플레이어가 turn플레이어에게 피를 1장 지급해야함
+
+  } else {  // 낸 패와 뒤집은 패가 다를 때
+
+    if (same == 0) {
+      std::cout << " 낸 패로 먹을 수 있는 카드가 없습니다. " << std::endl;
+      floor->push_back(n);
+
+    } else if (same == 1) {
+      std::cout << " 낸 패로 먹을 수 있는 카드가 1장 있습니다." << std::endl;
+      get->push_back(n); // 낸 패를 get에 추가
+      get->push_back(floor->at(arr1[0])); // 획득한 바닥 패를 get에 추가
+      floor->erase(floor->begin() + arr1[0]);  // 획득한 바닥 패를 floor에서 삭제
+
+    } else if (same == 2) {
+      int a;
+      std::cout << "먹을 수 있는 카드가 2장입니다. ( 0, 1 입력 선택 )"
+                << std::endl;
+      std::cout << " 0 : " << floor->at(arr1[0])->isName() << std::endl
+                << " 1 : " << floor->at(arr1[1])->isName() << std::endl;
+      std::cin >> a;
+      while (a < 0 || a > 1) {
+        std::cout << "0 과 1 중에 다시 선택하세요." << std::endl;
+        std::cin >> a;
+      } // 두 장의 카드 중 1 장 선택
+      get->push_back(n); // 낸 패를 get에 추가
+      get->push_back(floor->at(arr1[a])); // 선택한 바닥 패를 get에 추가
+      floor->erase(floor->begin() + arr1[a]);  // 선택한 바닥 패를 floor에서 삭제
+
+    } else if (same == 3) {
+      std::cout << " 뻑을 먹었습니다. ! " << std::endl;
+      get->push_back(n);
+      for (int i = 0; i < 3; i++) {
+        get->push_back(floor->at(arr1[i]));
+        floor->erase(floor->begin() + arr1[i]);
+      }
+    }   // Handout 한 패와 바닥패에 대해서 처리
+
+
+    if (same2 == 0) {
+      std::cout << " 뒤집은 패로 먹을 수 있는 카드가 없습니다. " << std::endl;
+      floor->push_back(fliped);
+    } else if (same2 == 1) {
+      std::cout << " 뒤집은 패로 먹을 수 있는 카드가 1장 있습니다." << std::endl;
+      get->push_back(fliped);                   // 뒤집은 패를 get에 추가
+      get->push_back(floor->at(arr2[0]));  // 획득한 바닥 패를 get에 추가
+      floor->erase(floor->begin() + arr2[0]);  // 획득한 바닥 패를 floor에서 삭제
+    } else if (same2 == 2) {
+      int a;
+      std::cout << "먹을 수 있는 카드가 2장입니다. ( 0, 1 입력 선택 )"
+                << std::endl;
+      std::cout << " 0 : " << floor->at(arr2[0])->isName() << std::endl
+                << " 1 : " << floor->at(arr2[1])->isName() << std::endl;
+      std::cin >> a;
+      while (a < 0 || a > 1) {
+        std::cout << "0 과 1 중에 다시 선택하세요." << std::endl;
+        std::cin >> a;
+      }
+      get->push_back(fliped);                   // 뒤집은 패를 get에 추가
+      get->push_back(floor->at(arr2[a]));  // 선택한 바닥 패를 get에 추가
+      floor->erase(floor->begin() + arr2[a]);  // 선택한 바닥 패를 floor에서 삭제
+    } else if (same2 == 3) {
+      std::cout << " 뻑을 먹었습니다. ! " << std::endl;
+      get->push_back(fliped);
+      for (int i = 0; i < 3; i++) {
+        get->push_back(floor->at(arr2[i]));
+        floor->erase(floor->begin() + arr2[i]);
+      }
+    }  // 뒤집은 패와 바닥패에 대해서 처리
+
+  }
+
+
+  std::cout << std::endl << " 이번 판에 획득한 카드 목록 " << std::endl;
+  for (int i = 0; i < get->size(); i++) {
+    std::cout << get->at(i)->isName() << std::endl; 
+    turn.addScoreField(get->at(i)); // turn 플레이어 스코어필드에 추가
+  }
+  std::cout << std::endl<< turn.playerName() << " 의 순서가 종료되었습니다." << std::endl;
+}
+
 // 정리된 카드 배열 무작위로 스택에 푸쉬
-void Deck::Shuffle() { 
+void Deck::Shuffle() {
   bool test[48];
   int arr[48];
   int count = 0;
