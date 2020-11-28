@@ -9,10 +9,6 @@ class scoreCalculator {
   explicit scoreCalculator(int score);
   explicit scoreCalculator();
   int score(std::vector<Card*> scoreField);
-<<<<<<< HEAD
-
-=======
->>>>>>> e773701bbe1edb004a51c8e27c296fe301968bc3
  private:
   int score_;
 };

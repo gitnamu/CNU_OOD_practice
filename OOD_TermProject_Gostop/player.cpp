@@ -5,7 +5,8 @@
 
 #include "scoreCalculator.h"
 
-Player::Player(std::string playerName) : go_(0), stop_(0), playerName_(playerName) {}
+Player::Player(std::string playerName)
+    : go_(0), stop_(0), playerName_(playerName) {}
 // 손에 있는 n번째 패 내기
 Card* Player::handOut(int n) {
   std::vector<Card*>::iterator iter = handField()->begin();
@@ -26,14 +27,14 @@ bool Player::giveCard(Player* other, Card* looseCard) {
   Card* outCard = nullptr;
   Card* ssangP = nullptr;
   for (iter = scoreField()->end(); iter > scoreField()->begin(); iter--) {
-    if ((*iter)->cardType() == 4) {   // scoreField에서 피 찾기
+    if ((*iter)->cardType() == 4) {  // scoreField에서 피 찾기
       outCard = *iter;
       this->scoreField()->erase(iter);
       other->addScoreField(outCard);
       return true;
     }
   }
-  return false; // 줄 피가 없으면 false 반환
+  return false;  // 줄 피가 없으면 false 반환
 }
 
 // 내 점수 반환
@@ -45,7 +46,7 @@ int Player::myScore() {
 
 // 내 손 패 출력
 void Player::printMyHandField() {
-  std::cout << "[ "<<this->playerName() <<" 님의 패 ]" << std::endl;
+  std::cout << "[ " << this->playerName() << " 님의 패 ]" << std::endl;
   int size = this->handField()->size();
   for (int i = 0; i < size; i++) {
     std::cout << "  -------------";

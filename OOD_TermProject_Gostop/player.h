@@ -9,13 +9,10 @@ class Player {
  public:
   Card* handOut(int n);               // 손에 있는 n번째 패 내기
   void addScoreField(Card* newCard);  // 카드를 딴 카드배열에 추가
-<<<<<<< HEAD
+
   bool giveCard(Player* other, Card* looseCard);  // 상대방에게 카드 주기
   int myScore();                                  // 내 점수
-=======
-  bool giveCard(Player* other,Card* looseCard);    // 상대방에게 카드 주기
-  int myScore();                      // 내 점수
->>>>>>> e773701bbe1edb004a51c8e27c296fe301968bc3
+
   void printMyHandField();
   Player(std::string playerName);  // 1인자 생성자
 
@@ -38,8 +35,4 @@ class Player {
   bool stop_;                      // stop 여부
 };
 
-<<<<<<< HEAD
 #endif
-=======
-#endif
->>>>>>> e773701bbe1edb004a51c8e27c296fe301968bc3

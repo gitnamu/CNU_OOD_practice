@@ -143,7 +143,6 @@
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="cardBuilder.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="player.cpp" />
     <ClCompile Include="scoreCalculator.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -153,7 +152,6 @@
     <ClInclude Include="cardBuilder.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="scoreCalculator.h" />
-    <ClInclude Include="player.h" />
     <ClInclude Include="Deck.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

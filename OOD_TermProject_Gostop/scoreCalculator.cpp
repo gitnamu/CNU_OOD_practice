@@ -1,45 +1,28 @@
 #include "scoreCalculator.h"
+
 #include <iostream>
 scoreCalculator::scoreCalculator(int score) : score_(score) {}
 scoreCalculator::scoreCalculator() : score_(0) {}
 int scoreCalculator::score(std::vector<Card*> scoreField) {
-<<<<<<< HEAD
   // 각 파라미터 정의 //
-=======
-    // 각 파라미터 정의 //
->>>>>>> e773701bbe1edb004a51c8e27c296fe301968bc3
   bool Bgwang_included = false;
   int total_gwang = 0;
   int total_yeol = 0;
   int total_ribbon = 0;
-<<<<<<< HEAD
   int red_ribbon = 0;   // 홍단
   int blue_ribbon = 0;  // 청단
   int cho_ribbon = 0;   // 초단
-=======
-  int red_ribbon = 0; // 홍단
-  int blue_ribbon = 0; // 청단
-  int cho_ribbon = 0; // 초단
->>>>>>> e773701bbe1edb004a51c8e27c296fe301968bc3
   int total_P = 0;
   int total_godori = 0;
 
   std::vector<Card*>::iterator ptr;
   for (ptr = scoreField.begin(); ptr != scoreField.end(); ++ptr) {
     Card* pickedCard = *ptr;
-<<<<<<< HEAD
     // pickedCard->printAllData();
     if (pickedCard->cardType() == 1) total_gwang += 1;
     if (pickedCard->isBgwang() == true) Bgwang_included += 1;
     if (pickedCard->cardType() == 2) total_yeol += 1;
     if (pickedCard->cardType() == 3) {  //단 세기
-=======
-    //pickedCard->printAllData();
-    if (pickedCard->cardType() == 1) total_gwang += 1;
-    if (pickedCard->isBgwang() == true) Bgwang_included += 1;
-    if (pickedCard->cardType() == 2) total_yeol += 1;
-    if (pickedCard->cardType() == 3) { //단 세기
->>>>>>> e773701bbe1edb004a51c8e27c296fe301968bc3
       total_ribbon += 1;
       switch (pickedCard->specialRibbon()) {
         case 1:
@@ -60,7 +43,6 @@ int scoreCalculator::score(std::vector<Card*> scoreField) {
       }
     }
     if (pickedCard->cardType() == 4) total_P += 1;
-<<<<<<< HEAD
     if (pickedCard->cardType() == 4 && pickedCard->isSsangP() == 1)
       total_P += 1;
     if (pickedCard->isGodori() == true) total_godori += 1;
@@ -72,18 +54,6 @@ int scoreCalculator::score(std::vector<Card*> scoreField) {
       score_ += total_gwang;
       score_--;
     } else {  // 비광 미포함
-=======
-    if (pickedCard->cardType() == 4 && pickedCard->isSsangP() == 1) total_P += 1;
-    if (pickedCard->isGodori() == true) total_godori += 1;
-  }
-  // 세기 종료, 아래서부터 점수 계산 //
-  if (total_gwang >= 3) { // 광 점수계산 만족
-    if (Bgwang_included >= 1) { // 비광 포함시(-1)
-      std::cout << "비광을 감지했습니다." << std::endl;
-      score_ += total_gwang;
-      score_--;
-    } else { // 비광 미포함
->>>>>>> e773701bbe1edb004a51c8e27c296fe301968bc3
       score_ += total_gwang;
     }
   }
@@ -97,12 +67,6 @@ int scoreCalculator::score(std::vector<Card*> scoreField) {
   std::cout << "열 갯수:" << total_yeol << std::endl;
   std::cout << "단 갯수:" << total_ribbon << std::endl;
   std::cout << "피 갯수:" << total_P << std::endl;
-<<<<<<< HEAD
 
   return score_;
-=======
-  
-
-    return score_; 
->>>>>>> e773701bbe1edb004a51c8e27c296fe301968bc3
 }
