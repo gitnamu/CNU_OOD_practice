@@ -132,6 +132,5 @@ int main() {
   a.prints(); // vector의 마지막 카드부터 출력
 
   // YYS Test Area //
-  Player* player1 = new Player();
   return 0;
 }

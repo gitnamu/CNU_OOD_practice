@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="Card.h" />
     <ClInclude Include="cardBuilder.h" />
+    <ClInclude Include="Deck.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="scoreCalculator.h" />
   </ItemGroup>
