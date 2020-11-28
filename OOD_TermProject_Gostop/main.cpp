@@ -2,6 +2,7 @@
 #include "CardBuilder.h"
 #include "scoreCalculator.h"
 #include "Deck.cpp"
+#include "player.h"
 int main() {
   stack<Card*> GameDeck;
   vector<Card*> GameFloor;
@@ -104,6 +105,8 @@ int main() {
   newCardVector.push_back(testCard21);
   std::cout << "최종 점수 : " << calculator.score(newCardVector) << std::endl;
 
+    // Tabby Test Area // 
+
   class testClass {
    public:
     std::vector<Card*>* getVector() { return newvector; }
@@ -120,7 +123,6 @@ int main() {
       builder.setType(2).setWhere(3).setMonth(12).setName("12월 열끗").build();
   Deck a;
   a.Shuffle();
-
   for (int i = 0; i < 6; i++) {
     a.GetFloor()->push_back(a.GetDeck()->top());
     std::cout << i <<" 번 째 바닥 패 :" <<a.GetDeck()->top()->isName() <<endl;
@@ -129,6 +131,7 @@ int main() {
 
   a.prints(); // vector의 마지막 카드부터 출력
 
-
+  // YYS Test Area //
+  Player* player1 = new Player();
   return 0;
 }

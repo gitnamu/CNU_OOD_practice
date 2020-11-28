@@ -3,11 +3,9 @@ void cardBuilder::reset() {
   card_type_ = 0;
   // 0 => NaN, 1 => 광, 2 => 열끗, 3 => 단, 4 => 피
   card_where_ = 0;
-  // 0 => Error, 1 => on Hands, 2 => on ScoreField, 3 => on Fields, 4 => in Deck
+  // 0 => Error, 1 => on Hands, 2 => on Fields, 3 => in Deck
   card_month_ = 0;
   // 1~12의 값. 똥 = 11, 비 = 12
-  card_order_ = 0;
-  // 표준일러스트 기준 1~4.
   special_ribbon_ = 0;
   // 홍단 == 1,청단 == 2,초단 == 3, 디폴트0
   is_bgwang_ = false;
@@ -29,16 +27,12 @@ cardBuilder& cardBuilder::setMonth(int cardMonth) {
   card_month_ = cardMonth;
   return *this;
 }
-cardBuilder& cardBuilder::setOrder(int cardOrder) {
-  card_order_ = cardOrder;
-  return *this;
-}
 cardBuilder& cardBuilder::setRibbon(int cardRibbon) {
   special_ribbon_ = cardRibbon;
   return *this;
 }
 cardBuilder& cardBuilder::setBgwang() {
-  is_bgwang_= true;
+  is_bgwang_ = true;
   return *this;
 }
 cardBuilder& cardBuilder::setSsangP() {
@@ -54,10 +48,10 @@ cardBuilder& cardBuilder::setName(std::string name) {
   return *this;
 }
 
-Card* cardBuilder::build(){
-  Card* Cardtoreturn =
-      new Card(card_type_, card_where_, card_month_, card_order_,
-               special_ribbon_, is_bgwang_, is_ssang_p_, is_godori_);
+Card* cardBuilder::build() {
+  Card* cardtore =
+      new Card(card_type_, card_where_, card_month_, special_ribbon_,
+               is_bgwang_, is_ssang_p_, is_godori_, name_);
   reset();
-  return Cardtoreturn;
+  return cardtore;
 }
