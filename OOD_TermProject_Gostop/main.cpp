@@ -32,24 +32,6 @@ int main() {
     a.GetDeck()->pop();
   }
 
-  // player1 손패 세팅
-  for (int i = 0; i < 7; i++) {
-    player1.setHandField(a.GetDeck()->top());
-    std::cout << i << " 번 째 player1 손 패 :"
-              << player1.handField()->back()->isName()
-              << std::endl;  // 디버깅용 출력
-    a.GetDeck()->pop();
-  }
-
-  // player2 손패 세팅
-  for (int i = 0; i < 7; i++) {
-    player2.setHandField(a.GetDeck()->top());
-    std::cout << i << " 번 째 player2 손 패 :"
-              << player2.handField()->back()->isName()
-              << std::endl;  // 디버깅용 출력
-    a.GetDeck()->pop();
-  }
-
   // player3 손패 세팅
   for (int i = 0; i < 7; i++) {
     player3.setHandField(a.GetDeck()->top());
