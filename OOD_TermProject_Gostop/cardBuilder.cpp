@@ -32,7 +32,7 @@ cardBuilder& cardBuilder::setRibbon(int cardRibbon) {
   return *this;
 }
 cardBuilder& cardBuilder::setBgwang() {
-  is_bgwang_= true;
+  is_bgwang_ = true;
   return *this;
 }
 cardBuilder& cardBuilder::setSsangP() {
