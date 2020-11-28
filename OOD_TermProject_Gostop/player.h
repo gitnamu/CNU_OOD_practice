@@ -13,7 +13,8 @@ class Player {
   bool giveCard(Player* other, Card* looseCard);  // 상대방에게 카드 주기
   int myScore();                                  // 내 점수
 
-  void printMyHandField();
+  void printMyHandField();         // 내 손 패 출력
+  void chooseCardToEat();          // 먹을 카드 고르기
   Player(std::string playerName);  // 1인자 생성자
 
   // Getters & Setters

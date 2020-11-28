@@ -1,7 +1,6 @@
 #include <iostream>
 
-#include "Deck.h"
-#include "player.h"
+#include"functions.h"
 #include "scoreCalculator.h"
 
 int main() {
@@ -11,6 +10,8 @@ int main() {
   Card* aa =
       builder.setType(2).setWhere(3).setMonth(12).setName("12월 열끗").build();
   Deck a;
+  // Funtion 객체 생성 (Singleton)
+  Functions* functions = new Functions();
   // 플레이어 객체들 생성
   Player player1 = Player::Player("player1");
   Player player2 = Player::Player("player2");
@@ -61,23 +62,13 @@ int main() {
       std::cout << "잘못된 수 입니다. 몇 번 카드를 낼지 다시 골라주세요 : ";
       std::cin >> nthCard;
     }
-    Card* player1_ChoosedCard = player1.handOut(nthCard);
-    std::cout <<player1_ChoosedCard->isName() << std::endl;
-    // 플레이어 1 카드 선택 종료 //
-    // 플레이어 1 카드가 먹을 게 있는지 확인 // 
-    std::cout << "먹을카드 있는지 확인" << std::endl;
-    bool isMatchAvailable = false;
-    for (int i = 0; i < a.GetFloor()->size(); i++) {
-      Card* floorCard = a.GetFloor()->at(i);
-      if (player1_ChoosedCard->cardMonth() == floorCard->cardMonth()) {
-        // 벡터 순회하며 플레이어가 낸 카드와 일치하는 카드 있는지 확인
-        isMatchAvailable = true;
-      }
-    }
-    if (!isMatchAvailable) { std::cout << "선택한 카드와 일치하는 카드가 없습니다." << std::endl; }
-    // 플레이어 1 먹을 카드 선택 //
-    
-    std::cout << "먹을 카드를 선택해 주세요 : ";
+
+    Card* player1_ChoosedCard = player1.handOut(nthCard);           // 내가 낼 카드
+    functions->chooseCardToEat(&a, &player1, player1_ChoosedCard);  // 먹을 카드 고르기
+    Card* openedDeckCard = a.GetDeck()->top();                      // 덱에서 카드 한장 뒤집기
+    a.GetDeck()->pop();                                             // 뽑은 카드 덱에서 pop
+    std::cout << "덱에서 카드를 뒤집어 ";
+    functions->chooseCardToEat(&a, &player1, openedDeckCard);       // 뒤집은 카드로 바닥패 중 뭐 먹을지 고르기
     
   }
   return 0;
