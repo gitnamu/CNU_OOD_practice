@@ -190,13 +190,18 @@ Deck::Deck()
 // 바닥 패 출력
 void Deck::prints() {
   std::cout << std::endl << "----바닥에 깔려있는 패----" << std::endl;
-  int count = 0;
-  Card* card;
+  int count = floor->size();
+  //std::cout << "플로어사이즈: " << count << std::endl;
+  /*Card* card;
   while (!floor->empty()) {
     card = floor->back();
     floor->pop_back();
     std::cout << card->isName() << std::endl;
     count++;
+  }*/ 
+  // 보수 이전 코드 //
+  for (int i = 0; i < count; i++) {
+    std::cout << floor->at(i)->isName() << std::endl;
   }
   std::cout << "--------------------------" << std::endl;
 }
