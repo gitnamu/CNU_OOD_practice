@@ -2,10 +2,11 @@
 #include <string>
 #ifndef CARD_H
 #define CARD_H
+#include <iostream>
 class Card {
  public:
-  explicit Card(int type, int where, int month, 
-	  int specialRibbon, bool bgwang, bool ssangp, bool isgodori,std::string name);
+  explicit Card(int type, int where, int month, int specialRibbon, bool bgwang,
+                bool ssangp, bool isgodori, std::string name);
   int cardType() const;
   int cardWhere() const;
   int cardMonth() const;
@@ -16,7 +17,6 @@ class Card {
   std::string isName() const;
   void yeolToSsangP(Card* targetCard);
   void printAllData();
-
 
  private:
   const int card_type_;
@@ -35,6 +35,6 @@ class Card {
   // 绊档府 备己夸家老矫 true
   const std::string name_;
 
-  //friend cardBuilder;
+  // friend cardBuilder;
 };
 #endif
