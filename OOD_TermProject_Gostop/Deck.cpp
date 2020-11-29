@@ -265,7 +265,7 @@ void Deck::PairCheck(Player* turn, Card* card, Player* other1,
 }
 
 void Deck::Run(Player* turn, Player* other1, Player* other2) {
-  std::cout << " ! ! ! ! ! " << this->GetDeck()->top()->isName()
+  std::cout << std::endl<<std::endl<<" (test) 뒤집을 카드 미리보기 : " << this->GetDeck()->top()->isName()
             << std::endl;  // test용 fliped카드 미리보기
   std::vector<Card*>* get = new std::vector<Card*>;
   int same = 0;  // Handout한 패와 바닥패가 같을 때 count
@@ -275,7 +275,8 @@ void Deck::Run(Player* turn, Player* other1, Player* other2) {
 
   this->prints(); 
   turn->printMyHandField();
-  // floor와 turn플레이어의 손 패를 출력한다.
+  turn->printMyScoreField();
+  // floor와 turn플레이어의 손 패와 먹은 패를 출력한다.
 
   if (!turn->handField()->empty()) {  // 손패가 비지 않았다면
     Card* handout = turn->handOut();  // 카드를 하나 뽑는다.
@@ -314,14 +315,13 @@ void Deck::Run(Player* turn, Player* other1, Player* other2) {
         other1->giveCard(turn);
         other2->giveCard(turn);
       }
-      return;
+      return; // special case 처리 후 종료
     } else {  // 낸 패와 뒤집은 패가 다를 때
       this->PairCheck(turn, handout,other1,other2);
     }  // handout한 패와 바닥패에 대해 처리
 
   }  // fliped 한 패와 바닥패에 대해 처리 시작 ( 손 패가 없을 때 여기부터 )
   this->PairCheck(turn, fliped,other1,other2);
-
   if (floor->empty()) {  // 턴이 끝날 때 바닥패가 없다면 싹쓸이
     std::cout << "[ 싹쓸이 ! 피를 1장 씩 받으세요. ]" << std::endl;
     other1->giveCard(turn);

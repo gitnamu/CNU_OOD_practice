@@ -72,7 +72,7 @@ int main() {
     }
     if (player1->stop() || player2->stop() || player3->stop()) break; // 셋 중 스톱이 나오면 종료
   }
-  std::cout << " 게임 종료 " << std::endl;
+  if (a.GetDeck()->empty()) std::cout << "덱이 비어 ";
   if (player1->stop()) {
     std::cout << player1->playerName() << "의 승리";
   } else if (player2->stop()) {
@@ -82,7 +82,7 @@ int main() {
   } else {
     std::cout << "무승부";
   }
-
-
+  std::cout << "로 게임 종료 " << std::endl;
+  // 점수에 따른 벌점 상점 계산 ( 피박 광박 고박 등등 )
   return 0;
 }

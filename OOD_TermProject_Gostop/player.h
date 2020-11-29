@@ -14,6 +14,7 @@ class Player {
   int myScore();                                  // 내 점수
 
   void printMyHandField();         // 내 손 패 출력
+  void printMyScoreField();  // 내 손 패 출력
   void goStop();                   // 고 , 스톱 결정
   Player(std::string playerName);  // 1인자 생성자
 

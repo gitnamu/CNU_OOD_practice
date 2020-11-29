@@ -54,10 +54,8 @@ bool Player::giveCard(Player* other) {
   return false;  // 줄 피가 없으면 false 반환
 }
 void Player::goStop() {
-  std::cout << "gostop 함수 진입" << std::endl;
   int sco = this->myScore();
-  std::cout << this->playerName() << "의 점수 : " << sco << std::endl;
-  std::cout << this->playerName() << "의 고 : " << this->go() << std::endl;
+  std::cout << this->playerName() << " : " << sco <<"점 , " <<this->go()<<"고"<< std::endl;
   if ((sco < 3) ||
       !(this->score() <
         sco)) {  // 3 점이하거나 턴을 돌았을 때 점수가 오르지 않으면
@@ -81,6 +79,7 @@ void Player::goStop() {
                 << std::endl;
     }
   }
+  return;
 }
 // 내 점수 반환
 int Player::myScore() {
@@ -89,7 +88,37 @@ int Player::myScore() {
   return score;
 }
 
-// 내 손 패 출력
+// 딴 패 출력
+void Player::printMyScoreField() {
+  if (this->scoreField()->empty()) {
+    return;
+  }
+  std::cout << "[ " << this->playerName() << " 님이 먹은 패 ]" << std::endl;
+  int size = this->scoreField()->size();
+  std::cout << "광 : ";
+  for (int i = 0; i < size; i++) {
+    if (this->scoreField()->at(i)->cardType() == 1)
+      std::cout << this->scoreField()->at(i)->isName() << " ";
+  }
+  std::cout<<std::endl << "열끗 : ";
+  for (int i = 0; i < size; i++) {
+    if (this->scoreField()->at(i)->cardType() == 2)
+      std::cout << this->scoreField()->at(i)->isName() << " ";
+  }
+  std::cout << std::endl << "단 : ";
+  for (int i = 0; i < size; i++) {
+    if (this->scoreField()->at(i)->cardType() == 3)
+      std::cout << this->scoreField()->at(i)->isName() << " ";
+  }
+  std::cout << std::endl << "피 : ";
+  for (int i = 0; i < size; i++) {
+    if (this->scoreField()->at(i)->cardType() == 4)
+      std::cout << this->scoreField()->at(i)->isName() << " ";
+  }
+  std::cout << std::endl;
+}
+
+  // 내 손 패 출력
 void Player::printMyHandField() {
   if (this->handField()->empty()) {
     return;

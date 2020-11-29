@@ -58,6 +58,7 @@ int scoreCalculator::score(std::vector<Card*> scoreField) {
     }
   }
   if (total_yeol >= 5) score_ += (total_yeol - 4);
+  if (total_ribbon >= 5) score_ += (total_ribbon - 4); // Ãß°¡
   if (red_ribbon == 3) score_ += 3;
   if (blue_ribbon == 3) score_ += 3;
   if (cho_ribbon == 3) score_ += 3;
