@@ -15,7 +15,6 @@ class Player {
 
   void printMyHandField();         // 내 손 패 출력
   void goStop();                   // 고 , 스톱 결정
-  void chooseCardToEat();          // 먹을 카드 고르기
   Player(std::string playerName);  // 1인자 생성자
 
   // Getters & Setters

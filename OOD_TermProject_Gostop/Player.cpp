@@ -1,4 +1,3 @@
-
 #include "player.h"
 
 #include <iostream>
@@ -6,10 +5,11 @@
 #include "scoreCalculator.h"
 
 Player::Player(std::string playerName)
-    : go_(0), stop_(0), playerName_(playerName) {}
+    : go_(0), stop_(0), score_(0),playerName_(playerName) {}
 // 손에 있는 n번째 패 내기
 Card* Player::handOut() {
-  if (this->handField()->empty()) { // 손 패가 없을 때 nullptr을 반환하여 뒤집기만
+  if (this->handField()
+          ->empty()) {  // 손 패가 없을 때 nullptr을 반환하여 뒤집기만
     std::cout << "손 패가 모두 소진되었습니다. 패를 뒤집으세요. " << std::endl;
     return nullptr;
   }
@@ -40,16 +40,17 @@ bool Player::giveCard(Player* other) {
   Card* outCard = nullptr;
   Card* ssangP = nullptr;
   for (iter = scoreField()->begin(); iter != scoreField()->end(); iter++) {
-    if ((*iter)->cardType() == 4 ) {  // scoreField에서 피 찾기
+    if ((*iter)->cardType() == 4) {  // scoreField에서 피 찾기
       outCard = *iter;
       this->scoreField()->erase(iter);
       other->addScoreField(outCard);
-      std::cout << this->playerName()<<"은(는) "<< other->playerName() << "에게 " << outCard->isName()
-                << "를 뺏겼습니다."<<std::endl;
+      std::cout << this->playerName() << "은(는) " << other->playerName()
+                << "에게 " << outCard->isName() << "를 뺏겼습니다."
+                << std::endl;
       return true;
     }
   }
-  std::cout << this->playerName() <<"은(는) 줄 피가 없습니다. " << std::endl;
+  std::cout << this->playerName() << "은(는) 줄 피가 없습니다. " << std::endl;
   return false;  // 줄 피가 없으면 false 반환
 }
 void Player::goStop() {
@@ -57,8 +58,10 @@ void Player::goStop() {
   int sco = this->myScore();
   std::cout << this->playerName() << "의 점수 : " << sco << std::endl;
   std::cout << this->playerName() << "의 고 : " << this->go() << std::endl;
-  if ((sco < 3) || !(this->score() < sco)) { // 3 점이하거나 턴을 돌았을 때 점수가 오르지 않으면
-    return; // 종료
+  if ((sco < 3) ||
+      !(this->score() <
+        sco)) {  // 3 점이하거나 턴을 돌았을 때 점수가 오르지 않으면
+    return;  // 종료
   } else {
     this->setScore(sco);
     int choice;
@@ -73,12 +76,13 @@ void Player::goStop() {
       this->setStop(true);
       std::cout << this->playerName() << "은(는) 스톱하였습니다 !" << std::endl;
     } else {
-      this->setGo(this->go()+1);
-      std::cout << this->playerName() <<" "<< this->go() << " 고 !" << std::endl;
+      this->setGo(this->go() + 1);
+      std::cout << this->playerName() << " " << this->go() << " 고 !"
+                << std::endl;
     }
   }
 }
-    // 내 점수 반환
+// 내 점수 반환
 int Player::myScore() {
   scoreCalculator scoreC = scoreCalculator::scoreCalculator();
   int score = scoreC.score(*Player::scoreField());
@@ -115,8 +119,6 @@ void Player::printMyHandField() {
   }
   std::cout << std::endl;
 }
-
-
 
 // Getters & Setters
 // 플레이어 이름 반환
