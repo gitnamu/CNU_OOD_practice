@@ -4,10 +4,7 @@
 #include "scoreCalculator.h"
 
 int main() {
-  std::cout << "GIT Synchronize Test" << std::endl;
   cardBuilder builder;
-  Card *aa =
-      builder.setType(2).setWhere(3).setMonth(12).setName("12월 열끗").build();
   Deck a;
   // Funtion 객체 생성 (Singleton)
   Functions *functions = new Functions();
@@ -20,35 +17,24 @@ int main() {
   // player1 손패 세팅
   for (int i = 0; i < 7; i++) {
     player1->setHandField(a.GetDeck()->top());
-    std::cout << i << " 번 째 player1 손 패 :"
-              << player1->handField()->back()->isName()
-              << std::endl;  // 디버깅용 출력
     a.GetDeck()->pop();
   }
 
   // player2 손패 세팅
   for (int i = 0; i < 7; i++) {
     player2->setHandField(a.GetDeck()->top());
-    std::cout << i << " 번 째 player2 손 패 :"
-              << player2->handField()->back()->isName()
-              << std::endl;  // 디버깅용 출력
     a.GetDeck()->pop();
   }
 
   // player3 손패 세팅
   for (int i = 0; i < 7; i++) {
     player3->setHandField(a.GetDeck()->top());
-    std::cout << i << " 번 째 player3 손 패 :"
-              << player3->handField()->back()->isName()
-              << std::endl;  // 디버깅용 출력
     a.GetDeck()->pop();
   }
 
   // 바닥 패 세팅
   for (int i = 0; i < 6; i++) {
     a.GetFloor()->push_back(a.GetDeck()->top());
-    std::cout << i << " 번 째 바닥 패 :" << a.GetDeck()->top()->isName()
-              << std::endl;
     a.GetDeck()->pop();
   }
 

@@ -190,7 +190,6 @@ Deck::Deck() : deck(new std::stack<Card*>), floor(new std::vector<Card*>) {}
 void Deck::prints() {
   std::cout << std::endl << "----------floor-----------" << std::endl;
   int count = floor->size();
-  Card* card;
   for (int i = 0; i < count; i++) {
     std::cout << floor->at(i)->isName() << std::endl;
   }
@@ -237,15 +236,16 @@ void Deck::PairCheck(Player* turn, Card* card, Player* other1,
     while (a < 0 || a > 1) {
       std::cout << "[ 0 과 1 중에 다시 선택하세요. ]" << std::endl;
       std::cin >> a;
-    }                           // 두 장의 카드 중 1 장 선택
-    turn->addScoreField(card);  
-    turn->addScoreField(this->GetFloor()->at(arr[a]));  
+    }  // 두 장의 카드 중 1 장 선택
+    turn->addScoreField(card);
+    turn->addScoreField(this->GetFloor()->at(arr[a]));
     // turn플레이어의 scorefiled에 추가
 
     std::cout << "[ " << card->isName() << " ] 과 [ "
               << this->GetFloor()->at(arr[a])->isName() << " ] 을 획득"
               << std::endl;
-    this->GetFloor()->erase(this->GetFloor()->begin() + arr[a]);  // floor에서 삭제
+    this->GetFloor()->erase(this->GetFloor()->begin() +
+                            arr[a]);  // floor에서 삭제
 
   } else if (same == 3) {
     std::cout << "[ 뻑을 먹었습니다. ! ]" << std::endl;
@@ -259,13 +259,17 @@ void Deck::PairCheck(Player* turn, Card* card, Player* other1,
     other1->giveCard(turn);
     other2->giveCard(turn);
     for (int i = 0; i < 3; i++) {
-      this->GetFloor()->erase(this->GetFloor()->begin() + arr[i]);  // floor에서 삭제
+      this->GetFloor()->erase(this->GetFloor()->begin() +
+                              arr[i]);  // floor에서 삭제
     }
   }
 }
 
 void Deck::Run(Player* turn, Player* other1, Player* other2) {
-  std::cout << std::endl<<std::endl<<" (test) 뒤집을 카드 미리보기 : " << this->GetDeck()->top()->isName()
+  std::cout << std::endl
+            << std::endl
+            << " (test) 뒤집을 카드 미리보기 : "
+            << this->GetDeck()->top()->isName()
             << std::endl;  // test용 fliped카드 미리보기
   std::vector<Card*>* get = new std::vector<Card*>;
   int same = 0;  // Handout한 패와 바닥패가 같을 때 count
@@ -273,7 +277,7 @@ void Deck::Run(Player* turn, Player* other1, Player* other2) {
   Card* fliped = deck->top();
   deck->pop();
 
-  this->prints(); 
+  this->prints();
   turn->printMyHandField();
   turn->printMyScoreField();
   // floor와 turn플레이어의 손 패와 먹은 패를 출력한다.
@@ -315,13 +319,13 @@ void Deck::Run(Player* turn, Player* other1, Player* other2) {
         other1->giveCard(turn);
         other2->giveCard(turn);
       }
-      return; // special case 처리 후 종료
-    } else {  // 낸 패와 뒤집은 패가 다를 때
-      this->PairCheck(turn, handout,other1,other2);
+      return;  // special case 처리 후 종료
+    } else {   // 낸 패와 뒤집은 패가 다를 때
+      this->PairCheck(turn, handout, other1, other2);
     }  // handout한 패와 바닥패에 대해 처리
 
   }  // fliped 한 패와 바닥패에 대해 처리 시작 ( 손 패가 없을 때 여기부터 )
-  this->PairCheck(turn, fliped,other1,other2);
+  this->PairCheck(turn, fliped, other1, other2);
   if (floor->empty()) {  // 턴이 끝날 때 바닥패가 없다면 싹쓸이
     std::cout << "[ 싹쓸이 ! 피를 1장 씩 받으세요. ]" << std::endl;
     other1->giveCard(turn);
@@ -335,6 +339,7 @@ void Deck::Run(Player* turn, Player* other1, Player* other2) {
 // 정리된 카드 배열 무작위로 스택에 푸쉬
 void Deck::Shuffle() {
   bool test[48];
+  for (int i = 0; i < 48; i++) test[i] = false;
   int arr[48];
   int count = 0;
   Card* tempCard;
@@ -349,4 +354,31 @@ void Deck::Shuffle() {
       count++;
     }
   }
+  if (ShuffleCheck()) {
+    this->Shuffle();
+  }
+}
+bool Deck::ShuffleCheck() {
+  bool check = false; 
+  Card* a[6];
+  int monthcount[12]; // 카드가 1월이면 0번 인덱스에 , 2월이면 1번 인덱스에 ,, +1
+  for (int i = 0; i < 12; i++) monthcount[i] = 0; // 0으로 초기화
+  for (int i = 0; i < 6; i++) {
+    a[i] = this->deck->top();
+    deck->pop();
+    monthcount[a[i]->cardMonth()-1]++;
+  }  // 꺼내서 확인
+  for (int i = 5; i >= 0; i--) { // 마지막에 꺼낸 카드부터 push
+    deck->push(a[i]);
+  }  // 도로 집어넣는다.
+  
+  // 검사
+  for (int i = 0; i < 12; i++) {
+    if (monthcount[i] == 4) { // 4개가 바닥에 깔리면
+      std::cout << "나가리!" << std::endl; // 나가리
+      check = true; 
+      break; // 탈출
+    }
+  }
+  return check;
 }
