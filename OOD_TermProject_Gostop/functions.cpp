@@ -37,8 +37,8 @@ void Functions::chooseCardToEat(Deck* deck, Player* player,Card* player_ChoosedC
       choosedFloorCard = sameMonthCards->at(n);
     }
     // 고른 바닥 패와 내가 낸 패를 내 점수 필드에 추가
-    player->addScoreField(choosedFloorCard);
+   // player->addScoreField(choosedFloorCard);
     player->addScoreField(player_ChoosedCard);
-    std::cout << "[ "<<choosedFloorCard->isName() << " ], [ " << player_ChoosedCard->isName() <<" ] 이(가) 내 score field에 추가 되었습니다!" << std::endl;
+    //std::cout << "[ "<<choosedFloorCard->isName() << " ], [ " << player_ChoosedCard->isName() <<" ] 이(가) 내 score field에 추가 되었습니다!" << std::endl;
   }
 }

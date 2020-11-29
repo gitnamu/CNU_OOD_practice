@@ -1,23 +1,24 @@
 #ifndef DECK_H
 #define DECK_H
 
-#include <vector>
 #include <stack>
+#include <vector>
+
 #include "cardBuilder.h"
 #include "player.h"
 
 class Deck {
  public:
-  void prints();  
+  void prints();   // floor 출력
   void Shuffle();  // 카드를 딴 카드배열에 추가
   std::vector<Card*>* GetFloor();
   std::stack<Card*>* GetDeck();
-  void Run(Player turn, Player other1, Player other2, Card* n);
+  void PairCheck(Player* turn, Card* card, Player* other1,
+                 Player* other2);  // turn플레이어의 차례 card와 floor 짝 검사
+  void Run(Player* turn, Player* other1, Player* other2);
   Deck();
 
-
  private:
-
   std::stack<Card*>* deck;
   std::vector<Card*>* floor;
 };

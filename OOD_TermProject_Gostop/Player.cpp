@@ -8,10 +8,23 @@
 Player::Player(std::string playerName)
     : go_(0), stop_(0), playerName_(playerName) {}
 // 손에 있는 n번째 패 내기
-Card* Player::handOut(int n) {
+Card* Player::handOut() {
+  if (this->handField()->empty()) { // 손 패가 없을 때 nullptr을 반환하여 뒤집기만
+    std::cout << "손 패가 모두 소진되었습니다. 패를 뒤집으세요. " << std::endl;
+    return nullptr;
+  }
+  int nthCard;
+  std::cout << "몇 번 카드를 낼지 골라주세요 : ";
+  std::cin >> nthCard;
+  // 범위 밖의 수 입력시 재입력 요청
+  while ((nthCard > this->handField()->size() - 1) || (nthCard < 0)) {
+    std::cout << "잘못된 수 입니다. 몇 번 카드를 낼지 다시 골라주세요 : ";
+    std::cin >> nthCard;
+  }
+
   std::vector<Card*>::iterator iter = handField()->begin();
-  iter += n;
-  Card* outCard = this->handField()->at(n);
+  iter += nthCard;
+  Card* outCard = this->handField()->at(nthCard);
   this->handField()->erase(iter);
   return outCard;
 }
@@ -22,22 +35,50 @@ void Player::addScoreField(Card* newCard) {
 }
 
 // 상대방에게 피 한장 주기
-bool Player::giveCard(Player* other, Card* looseCard) {
+bool Player::giveCard(Player* other) {
   std::vector<Card*>::iterator iter;
   Card* outCard = nullptr;
   Card* ssangP = nullptr;
-  for (iter = scoreField()->end(); iter > scoreField()->begin(); iter--) {
-    if ((*iter)->cardType() == 4) {  // scoreField에서 피 찾기
+  for (iter = scoreField()->begin(); iter != scoreField()->end(); iter++) {
+    if ((*iter)->cardType() == 4 ) {  // scoreField에서 피 찾기
       outCard = *iter;
       this->scoreField()->erase(iter);
       other->addScoreField(outCard);
+      std::cout << this->playerName()<<"은(는) "<< other->playerName() << "에게 " << outCard->isName()
+                << "를 뺏겼습니다."<<std::endl;
       return true;
     }
   }
+  std::cout << this->playerName() <<"은(는) 줄 피가 없습니다. " << std::endl;
   return false;  // 줄 피가 없으면 false 반환
 }
-
-// 내 점수 반환
+void Player::goStop() {
+  std::cout << "gostop 함수 진입" << std::endl;
+  int sco = this->myScore();
+  std::cout << this->playerName() << "의 점수 : " << sco << std::endl;
+  std::cout << this->playerName() << "의 고 : " << this->go() << std::endl;
+  if ((sco < 3) || !(this->score() < sco)) { // 3 점이하거나 턴을 돌았을 때 점수가 오르지 않으면
+    return; // 종료
+  } else {
+    this->setScore(sco);
+    int choice;
+    std::cout << " 고스톱이 가능합니다! 0과 1을 입력해주세요." << std::endl;
+    std::cout << " 고  ( 0 )   스톱 ( 1 ) " << std::endl;
+    std::cin >> choice;
+    while (choice < 0 || choice > 1) {
+      std::cout << "! 고 ( 0 ) 스톱 ( 1 ) 중에 선택해주세요. " << std::endl;
+      std::cin >> choice;
+    }
+    if (choice == 1) {
+      this->setStop(true);
+      std::cout << this->playerName() << "은(는) 스톱하였습니다 !" << std::endl;
+    } else {
+      this->setGo(this->go()+1);
+      std::cout << this->playerName() <<" "<< this->go() << " 고 !" << std::endl;
+    }
+  }
+}
+    // 내 점수 반환
 int Player::myScore() {
   scoreCalculator scoreC = scoreCalculator::scoreCalculator();
   int score = scoreC.score(*Player::scoreField());
@@ -46,6 +87,9 @@ int Player::myScore() {
 
 // 내 손 패 출력
 void Player::printMyHandField() {
+  if (this->handField()->empty()) {
+    return;
+  }
   std::cout << "[ " << this->playerName() << " 님의 패 ]" << std::endl;
   int size = this->handField()->size();
   for (int i = 0; i < size; i++) {
@@ -94,6 +138,12 @@ int Player::go() { return this->go_; }
 
 // 내 go 횟수 설정
 void Player::setGo(int goCount) { this->go_ = goCount; }
+
+// 내 go 횟수 반환
+int Player::score() { return this->score_; }
+
+// 내 go 횟수 설정
+void Player::setScore(int newscore) { this->score_ = newscore; }
 
 // 내 stop 여부 반환
 bool Player::stop() { return this->stop_; }
