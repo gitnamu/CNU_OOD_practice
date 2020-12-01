@@ -8,7 +8,8 @@ class scoreCalculator {
  public:
   explicit scoreCalculator(int score);
   explicit scoreCalculator();
-  int score(std::vector<Card*> scoreField);
+  int score(std::vector<Card*> scoreField, int go = 0);
+  int goConsider(int go, int score);
  private:
   int score_;
 };
