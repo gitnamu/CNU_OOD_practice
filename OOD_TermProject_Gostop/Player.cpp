@@ -38,7 +38,7 @@ void Player::addScoreField(Card* newCard) {
 bool Player::giveCard(Player* other) {
   std::vector<Card*>::iterator iter;
   Card* outCard = nullptr;
-  Card* ssangP = nullptr;
+  //Card* ssangP = nullptr;
   for (iter = scoreField()->begin(); iter != scoreField()->end(); iter++) {
     if ((*iter)->cardType() == 4) {  // scoreField에서 피 찾기
       outCard = *iter;

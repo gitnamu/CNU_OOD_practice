@@ -259,8 +259,8 @@ void Deck::PairCheck(Player* turn, Card* card, Player* other1,
     other1->giveCard(turn);
     other2->giveCard(turn);
     for (int i = 0; i < 3; i++) {
-      this->GetFloor()->erase(this->GetFloor()->begin() +
-                              arr[i]);  // floor에서 삭제
+      //this->GetFloor()->erase(this->GetFloor()->begin() + arr[i]);  // floor에서 삭제
+      this->GetFloor()->erase(this->GetFloor()->begin() +arr[0]);  // 오류 수정 : 플로어 삭제 위치지정 오류
     }
   }
 }
@@ -358,7 +358,25 @@ void Deck::Shuffle() {
     this->Shuffle();
   }
 }
-bool Deck::ShuffleCheck() {
+void Deck::BbuckShuffle() { // 뻑 검사를 위한 테스트용 함수. 카드가 무조건 정순으로 섞임.
+  bool test[48];
+  for (int i = 0; i < 48; i++) test[i] = false;
+  int arr[48];
+  int count = 0;
+  Card* tempCard;
+  srand((unsigned int)time(NULL));
+  while (count < 48) {
+    int num = rand() % 48;
+    if (test[count] != true) {
+      test[count] = true;
+      arr[count] = count;
+      tempCard = &cardset[count];
+      deck->push(tempCard);
+      count++;
+    }
+  }
+}
+  bool Deck::ShuffleCheck() {
   bool check = false; 
   Card* a[6];
   int monthcount[12]; // 카드가 1월이면 0번 인덱스에 , 2월이면 1번 인덱스에 ,, +1

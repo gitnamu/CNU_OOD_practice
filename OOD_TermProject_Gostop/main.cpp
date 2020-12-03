@@ -13,6 +13,7 @@ int main() {
   Player *player2 = new Player("player2");
   Player *player3 = new Player("player3");
   a.Shuffle();
+  // a.BbuckShuffle(); // 뻑 오류 테스트시 사용할 것.
 
   // player1 손패 세팅
   for (int i = 0; i < 7; i++) {
