@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include <iostream>
+#define decksize 50
 
 cardBuilder builder;
 
@@ -174,13 +175,18 @@ Card* Card48 = builder.setType(4)
                    .setSsangP()
                    .setName("12월 쌍피")
                    .build();
-Card cardset[48] = {
+Card* Card49 =
+    builder.setType(4).setMonth(0).setSsangP().setName("보너스 쌍피").build();
+Card* Card50 =
+    builder.setType(4).setMonth(0).setSsangP().setName("보너스 쌍피").build();
+Card cardset[50] = {
     *Card1,  *Card2,  *Card3,  *Card4,  *Card5,  *Card6,  *Card7,  *Card8,
     *Card9,  *Card10, *Card11, *Card12, *Card13, *Card14, *Card15, *Card16,
     *Card17, *Card18, *Card19, *Card20, *Card21, *Card22, *Card23, *Card24,
     *Card25, *Card26, *Card27, *Card28, *Card29, *Card30, *Card31, *Card32,
     *Card33, *Card34, *Card35, *Card36, *Card37, *Card38, *Card39, *Card40,
-    *Card41, *Card42, *Card43, *Card44, *Card45, *Card46, *Card47, *Card48};
+    *Card41, *Card42, *Card43, *Card44, *Card45, *Card46, *Card47, *Card48,
+    *Card49, *Card50};
 
 std::vector<Card*>* Deck::GetFloor() { return floor; }
 std::stack<Card*>* Deck::GetDeck() { return deck; }
@@ -258,9 +264,15 @@ void Deck::PairCheck(Player* turn, Card* card, Player* other1,
     std::cout << " 을 획득" << std::endl;
     other1->giveCard(turn);
     other2->giveCard(turn);
+    int cnt = 0;
     for (int i = 0; i < 3; i++) {
-      //this->GetFloor()->erase(this->GetFloor()->begin() + arr[i]);  // floor에서 삭제
-      this->GetFloor()->erase(this->GetFloor()->begin() +arr[0]);  // 오류 수정 : 플로어 삭제 위치지정 오류
+      // this->GetFloor()->erase(this->GetFloor()->begin() + arr[i]);  //
+      // floor에서 삭제
+      // this->GetFloor()->erase(this->GetFloor()->begin() +
+      //                       arr[0]);  // 오류 수정 : 플로어 삭제 위치지정
+      //                       오류
+      this->GetFloor()->erase(this->GetFloor()->begin() + arr[i] - cnt);
+      cnt++;
     }
   }
 }
@@ -277,54 +289,67 @@ void Deck::Run(Player* turn, Player* other1, Player* other2) {
   Card* fliped = deck->top();
   deck->pop();
 
+  other1->printMyScoreField();
+  other2->printMyScoreField();
   this->prints();
   turn->printMyHandField();
   turn->printMyScoreField();
+
   // floor와 turn플레이어의 손 패와 먹은 패를 출력한다.
 
   if (!turn->handField()->empty()) {  // 손패가 비지 않았다면
     Card* handout = turn->handOut();  // 카드를 하나 뽑는다.
-    std::cout << "HandOut : " << handout->isName() << std::endl;
-    std::cout << "Fliped : " << fliped->isName() << std::endl;
-    for (int i = 0; i < floor->size(); i++) {
-      if (floor->at(i)->cardMonth() == handout->cardMonth()) {
-        arr1[same] = i;
-        same++;
-      }
-    }  // 뽑은 카드에 대해 바닥패와 검사
-    if (fliped->cardMonth() ==
-        handout->cardMonth()) {  // Special Case는 Handout한 패와 뒤집은 패가
-                                 // 같을 때 발생
-      if (same == 0) {  // 쪽
-        std::cout << "[ 쪽 ]" << std::endl;
-        get->push_back(handout);
-        get->push_back(fliped);
-        other1->giveCard(turn);
-        other2->giveCard(turn);
-      } else if (same == 1) {  // 뻑
-        std::cout << "[ 뻑 ]" << std::endl;
-        floor->push_back(handout);
-        floor->push_back(fliped);
-        // 바닥에 깔아둔다.
-      } else if (same == 2) {  // 따닥
-        std::cout << "[ 따닥 ]" << std::endl;
-        get->push_back(handout);
-        get->push_back(fliped);
-        get->push_back(floor->at(arr1[0]));
-        get->push_back(floor->at(arr1[1]));
-        // 4장의 카드 get에 넣고
-        floor->erase(floor->begin() + arr1[0]);
-        floor->erase(floor->begin() + arr1[1]);
-        // 2장의 바닥패는 vector에서 삭제
-        other1->giveCard(turn);
-        other2->giveCard(turn);
-      }
-      return;  // special case 처리 후 종료
-    } else {   // 낸 패와 뒤집은 패가 다를 때
-      this->PairCheck(turn, handout, other1, other2);
-    }  // handout한 패와 바닥패에 대해 처리
-
+    if (handout->cardMonth() == 0) {
+      turn->addScoreField(handout);
+      std::cout << "보너스 카드를 냈습니다. ! " << std::endl;
+    } else {
+      std::cout << "HandOut : " << handout->isName() << std::endl;
+      std::cout << "Fliped : " << fliped->isName() << std::endl;
+      for (int i = 0; i < floor->size(); i++) {
+        if (floor->at(i)->cardMonth() == handout->cardMonth()) {
+          arr1[same] = i;
+          same++;
+        }
+      }  // 뽑은 카드에 대해 바닥패와 검사
+      if (fliped->cardMonth() ==
+          handout->cardMonth()) {  // Special Case는 Handout한 패와 뒤집은 패가
+                                   // 같을 때 발생
+        if (same == 0) {  // 쪽
+          std::cout << "[ 쪽 ]" << std::endl;
+          get->push_back(handout);
+          get->push_back(fliped);
+          other1->giveCard(turn);
+          other2->giveCard(turn);
+        } else if (same == 1) {  // 뻑
+          std::cout << "[ 뻑 ]" << std::endl;
+          floor->push_back(handout);
+          floor->push_back(fliped);
+          // 바닥에 깔아둔다.
+        } else if (same == 2) {  // 따닥
+          std::cout << "[ 따닥 ]" << std::endl;
+          get->push_back(handout);
+          get->push_back(fliped);
+          get->push_back(floor->at(arr1[0]));
+          get->push_back(floor->at(arr1[1]));
+          // 4장의 카드 get에 넣고
+          floor->erase(floor->begin() + arr1[0]);
+          floor->erase(floor->begin() + arr1[1]);
+          // 2장의 바닥패는 vector에서 삭제
+          other1->giveCard(turn);
+          other2->giveCard(turn);
+        }
+        return;  // special case 처리 후 종료
+      } else {   // 낸 패와 뒤집은 패가 다를 때
+        this->PairCheck(turn, handout, other1, other2);
+      }  // handout한 패와 바닥패에 대해 처리
+    }
   }  // fliped 한 패와 바닥패에 대해 처리 시작 ( 손 패가 없을 때 여기부터 )
+  while (fliped->cardMonth() == 0) {  // 보너스피가 나오면
+    std::cout << "보너스 피 획득 !\n 다시 뒤집습니다." << std::endl;
+    turn->addScoreField(fliped);
+    fliped = deck->top();
+    deck->pop();
+  }
   this->PairCheck(turn, fliped, other1, other2);
   if (floor->empty()) {  // 턴이 끝날 때 바닥패가 없다면 싹쓸이
     std::cout << "[ 싹쓸이 ! 피를 1장 씩 받으세요. ]" << std::endl;
@@ -338,14 +363,14 @@ void Deck::Run(Player* turn, Player* other1, Player* other2) {
 
 // 정리된 카드 배열 무작위로 스택에 푸쉬
 void Deck::Shuffle() {
-  bool test[48];
-  for (int i = 0; i < 48; i++) test[i] = false;
-  int arr[48];
+  bool test[decksize];
+  for (int i = 0; i < decksize; i++) test[i] = false;
+  int arr[decksize];
   int count = 0;
   Card* tempCard;
   srand((unsigned int)time(NULL));
-  while (count < 48) {
-    int num = rand() % 48;
+  while (count < decksize) {
+    int num = rand() % decksize;
     if (test[num] != true) {
       test[num] = true;
       arr[count] = num;
@@ -358,15 +383,16 @@ void Deck::Shuffle() {
     this->Shuffle();
   }
 }
-void Deck::BbuckShuffle() { // 뻑 검사를 위한 테스트용 함수. 카드가 무조건 정순으로 섞임.
-  bool test[48];
-  for (int i = 0; i < 48; i++) test[i] = false;
-  int arr[48];
+void Deck::BbuckShuffle() {  // 뻑 검사를 위한 테스트용 함수. 카드가 무조건
+                             // 정순으로 섞임.
+  bool test[decksize];
+  for (int i = 0; i < decksize; i++) test[i] = false;
+  int arr[decksize];
   int count = 0;
   Card* tempCard;
   srand((unsigned int)time(NULL));
-  while (count < 48) {
-    int num = rand() % 48;
+  while (count < decksize) {
+    int num = rand() % decksize;
     if (test[count] != true) {
       test[count] = true;
       arr[count] = count;
@@ -376,26 +402,29 @@ void Deck::BbuckShuffle() { // 뻑 검사를 위한 테스트용 함수. 카드가 무조건 정순�
     }
   }
 }
-  bool Deck::ShuffleCheck() {
-  bool check = false; 
+bool Deck::ShuffleCheck() {
+  bool check = false;
   Card* a[6];
-  int monthcount[12]; // 카드가 1월이면 0번 인덱스에 , 2월이면 1번 인덱스에 ,, +1
-  for (int i = 0; i < 12; i++) monthcount[i] = 0; // 0으로 초기화
+  int monthcount[12];  // 카드가 1월이면 0번 인덱스에 , 2월이면 1번 인덱스에 ,,
+                       // +1
+  for (int i = 0; i < 12; i++) monthcount[i] = 0;  // 0으로 초기화
   for (int i = 0; i < 6; i++) {
     a[i] = this->deck->top();
     deck->pop();
-    monthcount[a[i]->cardMonth()-1]++;
+    if (a[i]->cardMonth() != 0) { // 보너스피는 no count
+      monthcount[a[i]->cardMonth() - 1]++;
+    }
   }  // 꺼내서 확인
-  for (int i = 5; i >= 0; i--) { // 마지막에 꺼낸 카드부터 push
+  for (int i = 5; i >= 0; i--) {  // 마지막에 꺼낸 카드부터 push
     deck->push(a[i]);
   }  // 도로 집어넣는다.
-  
+
   // 검사
   for (int i = 0; i < 12; i++) {
-    if (monthcount[i] == 4) { // 4개가 바닥에 깔리면
-      std::cout << "나가리!" << std::endl; // 나가리
-      check = true; 
-      break; // 탈출
+    if (monthcount[i] == 4) {               // 4개가 바닥에 깔리면
+      std::cout << "나가리!" << std::endl;  // 나가리
+      check = true;
+      break;  // 탈출
     }
   }
   return check;

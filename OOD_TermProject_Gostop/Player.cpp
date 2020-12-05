@@ -38,7 +38,7 @@ void Player::addScoreField(Card* newCard) {
 bool Player::giveCard(Player* other) {
   std::vector<Card*>::iterator iter;
   Card* outCard = nullptr;
-  //Card* ssangP = nullptr;
+  Card* ssangP = nullptr;
   for (iter = scoreField()->begin(); iter != scoreField()->end(); iter++) {
     if ((*iter)->cardType() == 4) {  // scoreField¿¡¼­ ÇÇ Ã£±â
       outCard = *iter;
@@ -94,26 +94,26 @@ void Player::printMyScoreField() {
     return;
   }
   std::cout << "[ " << this->playerName() << " ´ÔÀÌ ¸ÔÀº ÆÐ ]" << std::endl;
-  int size = this->scoreField()->size();
-  std::cout << "±¤ : ";
+  size_t size = this->scoreField()->size();
+  std::cout << "±¤   : ";
   for (int i = 0; i < size; i++) {
     if (this->scoreField()->at(i)->cardType() == 1)
-      std::cout << this->scoreField()->at(i)->isName() << " ";
+      std::cout <<"[" << this->scoreField()->at(i)->isName() << "] ";
   }
   std::cout<<std::endl << "¿­²ý : ";
   for (int i = 0; i < size; i++) {
     if (this->scoreField()->at(i)->cardType() == 2)
-      std::cout << this->scoreField()->at(i)->isName() << " ";
+      std::cout <<"[" << this->scoreField()->at(i)->isName() << "] ";
   }
-  std::cout << std::endl << "´Ü : ";
+  std::cout << std::endl << "´Ü   : ";
   for (int i = 0; i < size; i++) {
     if (this->scoreField()->at(i)->cardType() == 3)
-      std::cout << this->scoreField()->at(i)->isName() << " ";
+      std::cout <<"[" << this->scoreField()->at(i)->isName() << "] ";
   }
-  std::cout << std::endl << "ÇÇ : ";
+  std::cout << std::endl << "ÇÇ   : ";
   for (int i = 0; i < size; i++) {
     if (this->scoreField()->at(i)->cardType() == 4)
-      std::cout << this->scoreField()->at(i)->isName() << " ";
+      std::cout <<"[" << this->scoreField()->at(i)->isName() << "] ";
   }
   std::cout << std::endl;
 }
@@ -124,7 +124,7 @@ void Player::printMyHandField() {
     return;
   }
   std::cout << "[ " << this->playerName() << " ´ÔÀÇ ÆÐ ]" << std::endl;
-  int size = this->handField()->size();
+  size_t size = this->handField()->size();
   for (int i = 0; i < size; i++) {
     std::cout << "  -------------";
   }

@@ -2,6 +2,7 @@
 
 #include "functions.h"
 #include "scoreCalculator.h"
+#include <Windows.h>
 
 int main() {
   cardBuilder builder;
@@ -35,7 +36,13 @@ int main() {
 
   // 바닥 패 세팅
   for (int i = 0; i < 6; i++) {
-    a.GetFloor()->push_back(a.GetDeck()->top());
+    Card *flo = a.GetDeck()->top();
+    if (flo->cardMonth() == 0) { // 보너스패가 나오면
+      std::cout << "바닥 보너스패 Player1 획득 ! " << std::endl;
+      player1->addScoreField(flo); // 플레이어1이 먹는다.
+    } else { // 아니면
+      a.GetFloor()->push_back(flo); // 바닥에 깐다
+    }
     a.GetDeck()->pop();
   }
 
@@ -43,20 +50,22 @@ int main() {
   while (!a.GetDeck()->empty()) {  // 종료 조건 deck empty
     // functions->chooseCardToEat(&a, &player1, player1_ChoosedCard);  // 먹을
     // 카드 고르기
+    std::cout << "뒤집을 카드 개수 : " << a.GetDeck()->size() << std::endl;
     if (!player1->stop() && !player2->stop() && !player3->stop()) {
       a.Run(player1, player2, player3);
       player1->goStop();
     }
-
+    Sleep(3000);
     if (!player1->stop() && !player2->stop() && !player3->stop()) {
       a.Run(player2, player1, player3);
       player2->goStop();
     }
-
+    Sleep(3000);
     if (!player1->stop() && !player2->stop() && !player3->stop()) {
       a.Run(player3, player2, player1);
       player3->goStop();
     }
+    Sleep(3000);
     if (player1->stop() || player2->stop() || player3->stop()) break; // 셋 중 스톱이 나오면 종료
   }
   if (a.GetDeck()->empty()) std::cout << "덱이 비어 ";
