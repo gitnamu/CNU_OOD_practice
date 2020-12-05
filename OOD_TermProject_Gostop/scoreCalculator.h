@@ -4,13 +4,16 @@
 #include <vector>
 
 #include "card.h"
+#include"player.h"
 class scoreCalculator {
  public:
-  explicit scoreCalculator(int score);
-  explicit scoreCalculator();
-  int score(std::vector<Card*> scoreField, int go = 0);
-  int goConsider(int go, int score);
+  //explicit scoreCalculator(int score);
+  scoreCalculator();
+  int score(ScoreField* scoreField, int go, int shake);
+  int calcBak(Player* winner, Player* loser);
+
  private:
-  int score_;
+  int goConsider(int go, int score);
+  int shakeConsider(int shake, int score);
 };
 #endif

@@ -89,8 +89,7 @@ Card* Card24 =
 Card* Card25 = builder.setType(2)
                    .setWhere(3)
                    .setMonth(7)
-                   .setGodori()
-                   .setName("7월 고도리")
+                   .setName("7월 열끗")
                    .build();
 Card* Card26 = builder.setType(3)
                    .setWhere(3)

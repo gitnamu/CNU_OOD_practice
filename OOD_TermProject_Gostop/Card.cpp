@@ -10,14 +10,23 @@ Card::Card(int type, int where, int month, int specialRibbon,
       is_ssang_p_(ssangp),
       is_godori_(isgodori),
       name_(name) {}
+
 int Card::cardType() const { return card_type_; }
+
 int Card::cardWhere() const { return card_where_; }
+
 int Card::cardMonth() const { return card_month_; }
+
 int Card::specialRibbon() const { return special_ribbon_; }
+
 bool Card::isBgwang() const { return is_bgwang_; }
+
 bool Card::isSsangP() const { return is_ssang_p_; }
+
 bool Card::isGodori() const { return is_godori_; }
+
 std::string Card::isName() const { return name_; }
+
 void Card::yeolToSsangP(Card* targetCard) {
   bool isYeol = targetCard->cardType() == 2;
   bool isMonth9 = targetCard->cardMonth() == 9;
