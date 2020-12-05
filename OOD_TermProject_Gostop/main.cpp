@@ -2,6 +2,10 @@
 #include<algorithm>
 #include"Deck.h"
 
+#include "functions.h"
+#include "scoreCalculator.h"
+#include <Windows.h>
+
 int main() {
   Deck a;
   // 플레이어 객체들 생성
@@ -31,7 +35,13 @@ int main() {
 
   // 바닥 패 세팅
   for (int i = 0; i < 6; i++) {
-    a.GetFloor()->push_back(a.GetDeck()->top());
+    Card *flo = a.GetDeck()->top();
+    if (flo->cardMonth() == 0) { // 보너스패가 나오면
+      std::cout << "바닥 보너스패 Player1 획득 ! " << std::endl;
+      player1->addScoreField(flo); // 플레이어1이 먹는다.
+    } else { // 아니면
+      a.GetFloor()->push_back(flo); // 바닥에 깐다
+    }
     a.GetDeck()->pop();
   }
   int moneyPerScore = 0;
@@ -41,29 +51,26 @@ int main() {
   std::cout << ">> 게임 시작! (1점당 " << moneyPerScore << "원) <<" << std::endl;
 
   // stop 전 까지 게임 진행 (임시 테스트)
-  bool deckEmpty = false;
-  while (!deckEmpty) {  // 종료 조건 deck empty
+  while (!a.GetDeck()->empty()) {  // 종료 조건 deck empty
     // functions->chooseCardToEat(&a, &player1, player1_ChoosedCard);  // 먹을
     // 카드 고르기
+    std::cout << "뒤집을 카드 개수 : " << a.GetDeck()->size() << std::endl;
+    if (!player1->stop() && !player2->stop() && !player3->stop()) {
       a.Run(player1, player2, player3);
       player1->goStop();
-      if (player1->stop() || player2->stop() || player3->stop()) {  // 셋 중 스톱이 나오면 종료
-        break;
-      }
-
+    }
+    Sleep(3000);
+    if (!player1->stop() && !player2->stop() && !player3->stop()) {
       a.Run(player2, player1, player3);
       player2->goStop();
-      if (player1->stop() || player2->stop() || player3->stop()) {  // 셋 중 스톱이 나오면 종료
-        break;
-      }
-
+    }
+    Sleep(3000);
+    if (!player1->stop() && !player2->stop() && !player3->stop()) {
       a.Run(player3, player2, player1);
       player3->goStop();
-      if (player1->stop() || player2->stop() || player3->stop()) {
-        break;
-      }
-      // 덱이 비면 게임 종료 (정상적으로 카드 배분했으면 player3차례에서만 덱이 빔)
-      if (a.GetDeck()->empty()) { deckEmpty = true; }
+    }
+    Sleep(3000);
+    if (player1->stop() || player2->stop() || player3->stop()) break; // 셋 중 스톱이 나오면 종료
   }
   //int winningScore = std::max(player1->myScore(), player2->myScore());
 
