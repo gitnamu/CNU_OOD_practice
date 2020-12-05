@@ -1,10 +1,9 @@
 #include <iostream>
 #include<algorithm>
-#include"Deck.h"
-
-#include "functions.h"
-#include "scoreCalculator.h"
 #include <Windows.h>
+
+#include"Deck.h"
+#include "scoreCalculator.h"
 
 int main() {
   Deck a;
@@ -73,12 +72,6 @@ int main() {
     if (player1->stop() || player2->stop() || player3->stop()) break; // 셋 중 스톱이 나오면 종료
   }
   //int winningScore = std::max(player1->myScore(), player2->myScore());
-
-  if (deckEmpty) {
-    std::cout << "덱이 비어 ";  // 덱이 비어서 종료되었다면 출력
-  } else {
-  
-  }
   
   // 누구의 승리인지 출력
   if (player1->stop()) {      // player1의 승리

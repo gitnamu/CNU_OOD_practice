@@ -175,9 +175,9 @@ Card* Card48 = builder.setType(4)
                    .setName("12¿ù ½ÖÇÇ")
                    .build();
 Card* Card49 =
-    builder.setType(4).setMonth(0).setSsangP().setName("º¸³Ê½º ½ÖÇÇ").build();
+    builder.setType(4).setMonth(0).setSsangP().setName("Bonus ½ÖÇÇ").build();
 Card* Card50 =
-    builder.setType(4).setMonth(0).setSsangP().setName("º¸³Ê½º ½ÖÇÇ").build();
+    builder.setType(4).setMonth(0).setSsangP().setName("Bonus ½ÖÇÇ").build();
 Card cardset[50] = {
     *Card1,  *Card2,  *Card3,  *Card4,  *Card5,  *Card6,  *Card7,  *Card8,
     *Card9,  *Card10, *Card11, *Card12, *Card13, *Card14, *Card15, *Card16,

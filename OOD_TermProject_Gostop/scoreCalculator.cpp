@@ -76,9 +76,7 @@ int scoreCalculator::shakeConsider(int shake, int score) {
 
 // 광박, 피박, 멍박 계산하여 두 명 사이의 점수 차 반환
 int scoreCalculator::calcBak(Player* winner, Player* loser) {
-  std::cout << "[ " << winner->playerName() << " ]" << std::endl; // Winner 이름 출력
   int winnerScore = winner->myScore();                        // Winner 최종 점수
-  std::cout << "[ " << loser->playerName() << " ]" << std::endl;  // Loser 이름 출력
   int loserScore = loser->myScore();                          // Loser 최종 점수
   ScoreField* winnerScoreField = winner->scoreField();    // 이긴사람 scoreField
   ScoreField* loserScoreField = loser->scoreField();      // 진사람 scoreField
@@ -88,7 +86,6 @@ int scoreCalculator::calcBak(Player* winner, Player* loser) {
   // 진 사람 피 점수
   int otherPScore =
       static_cast<int>(loserScoreField->myP.size() + loserScoreField->mySsangP.size() * 2);
-  std::cout << "-------------------------"<<std::endl;
   std::cout <<  "[";
   if (winnerScoreField->myGwang.size() >= 3) {    // 광박
     if (loserScoreField->myGwang.size() == 0) {
