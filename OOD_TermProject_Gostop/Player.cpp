@@ -74,8 +74,8 @@ void Player::addScoreField(Card* newCard) {
 
 // 상대방에게 피 한장 주기
 bool Player::giveCard(Player* other) {
-  int myPSize = this->scoreField()->myP.size();
-  int mySsangPSize = this->scoreField()->mySsangP.size();
+  size_t myPSize = this->scoreField()->myP.size();
+  size_t mySsangPSize = this->scoreField()->mySsangP.size();
   Card* losingCard;
 
   if (myPSize > 0) {  // 피 있으면 피 주기
@@ -135,7 +135,7 @@ void Player::printMyScoreField() {
   std::cout << "[ " << this->playerName() << " 님이 먹은 패 ]" << std::endl;
   std::cout << "광 : ";
 
-  int size = this->scoreField()->myGwang.size();
+  size_t size = this->scoreField()->myGwang.size();
   for (int i = 0; i < size; i++) {
     std::cout << this->scoreField()->myGwang.at(i)->isName() << " ";
   }
@@ -172,7 +172,7 @@ void Player::printMyHandField() {
     return;
   }
   std::cout << "[ " << this->playerName() << " 님의 패 ]" << std::endl;
-  int size = this->handField()->size();
+  size_t size = this->handField()->size();
   for (int i = 0; i < size; i++) {
     std::cout << "  -------------";
   }

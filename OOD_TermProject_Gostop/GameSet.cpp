@@ -204,14 +204,16 @@ void GameSet::SetPlayerHand(Player* p1, Player* p2,
   }
 }
 void GameSet::SetFloorField(Player* first) {  // 바닥에 6장을 깐다.
-  Card* flo = this->GetDeck()->top();
-  if (flo->cardMonth() == 0) {  // 보너스패가 나오면
-    std::cout <<first->playerName()<< " 바닥 보너스패 획득 ! " << std::endl;
-    first->addScoreField(flo);   // 플레이어1이 먹는다.
-  } else {                         // 아니면
-    this->GetFloor()->push_back(flo);  // 바닥에 깐다
+  for (int i = 0; i < 6; i++) {
+    Card* flo = this->GetDeck()->top();
+    if (flo->cardMonth() == 0) {  // 보너스패가 나오면
+      std::cout << first->playerName() << " 바닥 보너스패 획득 ! " << std::endl;
+      first->addScoreField(flo);         // 플레이어1이 먹는다.
+    } else {                             // 아니면
+      this->GetFloor()->push_back(flo);  // 바닥에 깐다
+    }
+    this->GetDeck()->pop();
   }
-  this->GetDeck()->pop();
 }
 void GameSet::SetGame(Player* first, Player* other1,
                       Player* other2) {  // 게임 준비
@@ -221,7 +223,7 @@ void GameSet::SetGame(Player* first, Player* other1,
     // 바닥 패 출력
 void GameSet::prints() {
   std::cout << std::endl << "----------floor-----------" << std::endl;
-  int count = floor->size();
+  size_t count = floor->size();
   for (int i = 0; i < count; i++) {
     std::cout << floor->at(i)->isName() << std::endl;
   }
