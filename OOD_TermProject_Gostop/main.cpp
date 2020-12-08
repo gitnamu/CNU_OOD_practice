@@ -2,11 +2,11 @@
 #include<algorithm>
 #include <Windows.h>
 
-#include"Deck.h"
+#include "GameSet.h"
 #include "scoreCalculator.h"
 
 int main() {
-  Deck a;
+  GameSet a;
   // 플레이어 객체들 생성
   Player *player1 = new Player("player1");
   Player *player2 = new Player("player2");
@@ -14,35 +14,7 @@ int main() {
   a.Shuffle();
   // a.BbuckShuffle(); // 뻑 오류 테스트시 사용할 것.
 
-  // player1 손패 세팅
-  for (int i = 0; i < 7; i++) {
-    player1->setHandField(a.GetDeck()->top());
-    a.GetDeck()->pop();
-  }
-
-  // player2 손패 세팅
-  for (int i = 0; i < 7; i++) {
-    player2->setHandField(a.GetDeck()->top());
-    a.GetDeck()->pop();
-  }
-
-  // player3 손패 세팅
-  for (int i = 0; i < 7; i++) {
-    player3->setHandField(a.GetDeck()->top());
-    a.GetDeck()->pop();
-  }
-
-  // 바닥 패 세팅
-  for (int i = 0; i < 6; i++) {
-    Card *flo = a.GetDeck()->top();
-    if (flo->cardMonth() == 0) { // 보너스패가 나오면
-      std::cout << "바닥 보너스패 Player1 획득 ! " << std::endl;
-      player1->addScoreField(flo); // 플레이어1이 먹는다.
-    } else { // 아니면
-      a.GetFloor()->push_back(flo); // 바닥에 깐다
-    }
-    a.GetDeck()->pop();
-  }
+  a.SetGame(player1,player2,player3);
   int moneyPerScore = 0;
   std::cout << ">> preset <<" << std::endl;
   std::cout << "1점당 얼마로 계산하시겠습니까?(단위: 원) : ";
@@ -58,17 +30,17 @@ int main() {
       a.Run(player1, player2, player3);
       player1->goStop();
     }
-    Sleep(3000);
+    //Sleep(3000);
     if (!player1->stop() && !player2->stop() && !player3->stop()) {
       a.Run(player2, player1, player3);
       player2->goStop();
     }
-    Sleep(3000);
+    //Sleep(3000);
     if (!player1->stop() && !player2->stop() && !player3->stop()) {
       a.Run(player3, player2, player1);
       player3->goStop();
     }
-    Sleep(3000);
+    //Sleep(3000);
     if (player1->stop() || player2->stop() || player3->stop()) break; // 셋 중 스톱이 나오면 종료
   }
   //int winningScore = std::max(player1->myScore(), player2->myScore());
