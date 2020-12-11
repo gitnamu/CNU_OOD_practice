@@ -12,7 +12,8 @@ Player::Player(std::string playerName)
     : playerName_(playerName), go_(0), stop_(0), score_(0), shake_(0) {
   scoreField_ = ScoreField::ScoreField();
 }
-bool Player::shakable() {}
+//bool Player::shakable() {} 구현x
+
     // 손에 있는 n번째 패 내기
 Card* Player::handOut() {
   if (this->handField()->empty()) {  // 손 패가 없을 때 nullptr을 반환하여 뒤집기만
