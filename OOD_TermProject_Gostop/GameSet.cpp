@@ -219,7 +219,15 @@ void GameSet::SetGame(Player* first, Player* other1,
                       Player* other2) {  // 게임 준비
   this->SetPlayerHand(first,other1,other2);
   this->SetFloorField(first);
+  /*first->ChongTong();
+  other1->ChongTong();
+  other2->ChongTong();*/
+  // 총통이 나면 7점으로 스탑, 게임 종료
 }
+/*void GameSet::Bomb(Player* turn,Player* Other1, Player* Other2) {
+  if (turn->shake())
+  std::cout << " 폭탄이 가능합니다. ! " << std::endl;
+}*/
     // 바닥 패 출력
 void GameSet::prints() {
   std::cout << std::endl << "----------floor-----------" << std::endl;
@@ -306,13 +314,12 @@ void GameSet::PairCheck(Player* turn, Card* card, Player* other1,
 }
 
 void GameSet::Run(Player* turn, Player* other1, Player* other2) {
-  std::cout << std::endl
+  /*std::cout << std::endl
             << std::endl
             << " (test) 뒤집을 카드 미리보기 : "
             << this->GetDeck()->top()->isName()
             << std::endl;  // test용 fliped카드 미리보기
-  std::cout << "(test) 남은 DECK 수 : " << this->GetDeck()->size() << std::endl;
-  std::vector<Card*>* get = new std::vector<Card*>;
+  std::cout << "(test) 남은 DECK 수 : " << this->GetDeck()->size() << std::endl;*/
   int same = 0;  // Handout한 패와 바닥패가 같을 때 count
   int arr1[3];   // 같은 패의 index를 담고 있음
   Card* fliped = deck->top();
@@ -350,22 +357,27 @@ void GameSet::Run(Player* turn, Player* other1, Player* other2) {
                                    // 같을 때 발생
         if (same == 0) {  // 쪽
           std::cout << "[ 쪽 ]" << std::endl;
-          get->push_back(handout);
-          get->push_back(fliped);
+          turn->addScoreField(handout);
+          turn->addScoreField(fliped);
+          std::cout << "[ " << handout->isName() << " ] 와 [ "
+                    << fliped->isName() << " ] 을 획득"<<std::endl;
           other1->giveCard(turn);
           other2->giveCard(turn);
         } else if (same == 1) {  // 뻑
           std::cout << "[ 뻑 ]" << std::endl;
+          std::cout << "[ " << handout->isName() << " ] 와 [ "
+                    << fliped->isName() << " ] 을 바닥에 깝니다..." << std::endl;
           floor->push_back(handout);
           floor->push_back(fliped);
           // 바닥에 깔아둔다.
         } else if (same == 2) {  // 따닥
           std::cout << "[ 따닥 ]" << std::endl;
-          get->push_back(handout);
-          get->push_back(fliped);
-          get->push_back(floor->at(arr1[0]));
-          get->push_back(floor->at(arr1[1]));
-          // 4장의 카드 get에 넣고
+          std::cout << handout->cardMonth() <<"달의 카드 모두 획득" << std::endl;
+          turn->addScoreField(handout);
+          turn->addScoreField(fliped);
+          turn->addScoreField(floor->at(arr1[0]));
+          turn->addScoreField(floor->at(arr1[1]));
+          // 4장의 카드 획득
           floor->erase(floor->begin() + arr1[0]);
           floor->erase(floor->begin() + arr1[1]);
           // 2장의 바닥패는 vector에서 삭제

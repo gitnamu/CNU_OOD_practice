@@ -13,19 +13,20 @@ int main() {
   Player *player3 = new Player("player3");
   a.Shuffle();
   // a.BbuckShuffle(); // 뻑 오류 테스트시 사용할 것.
-
-  a.SetGame(player1,player2,player3);
   int moneyPerScore = 0;
   std::cout << ">> preset <<" << std::endl;
   std::cout << "1점당 얼마로 계산하시겠습니까?(단위: 원) : ";
   std::cin >> moneyPerScore;
-  std::cout << ">> 게임 시작! (1점당 " << moneyPerScore << "원) <<" << std::endl;
+  std::cout << ">> 게임 시작! (1점당 " << moneyPerScore << "원) <<"
+            << std::endl<<std::endl;
+  // 점수 설정
+  a.SetGame(player1,player2,player3);
+  //게임판 설정
 
   // stop 전 까지 게임 진행 (임시 테스트)
   while (!a.GetDeck()->empty()) {  // 종료 조건 deck empty
     // functions->chooseCardToEat(&a, &player1, player1_ChoosedCard);  // 먹을
     // 카드 고르기
-    std::cout << "뒤집을 카드 개수 : " << a.GetDeck()->size() << std::endl;
     if (!player1->stop() && !player2->stop() && !player3->stop()) {
       a.Run(player1, player2, player3);
       player1->goStop();

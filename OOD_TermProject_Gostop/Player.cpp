@@ -12,8 +12,8 @@ Player::Player(std::string playerName)
     : playerName_(playerName), go_(0), stop_(0), score_(0), shake_(0) {
   scoreField_ = ScoreField::ScoreField();
 }
-
-// 손에 있는 n번째 패 내기
+bool Player::shakable() {}
+    // 손에 있는 n번째 패 내기
 Card* Player::handOut() {
   if (this->handField()->empty()) {  // 손 패가 없을 때 nullptr을 반환하여 뒤집기만
     std::cout << "손 패가 모두 소진되었습니다. 패를 뒤집으세요. " << std::endl;
@@ -101,7 +101,6 @@ bool Player::giveCard(Player* other) {
 
 void Player::goStop() {
   int sco = this->myScore();
-  std::cout << this->playerName() << " : " << sco <<"점 , " <<this->go()<<"고"<< std::endl;
   if ((sco < 3) || !(this->score() < sco)) {  // 3 점이하거나 턴을 돌았을 때 점수가 오르지 않으면
     return;  // 종료
   } else {
@@ -132,36 +131,42 @@ int Player::myScore() {
 
 // 딴 패 출력
 void Player::printMyScoreField() {
-  std::cout << "[ " << this->playerName() << " 님이 먹은 패 ]" << std::endl;
-  std::cout << "광 : ";
-
+  std::cout << "[ " << this->playerName() << " 님이 먹은 패 ]" ;
   size_t size = this->scoreField()->myGwang.size();
-  for (int i = 0; i < size; i++) {
-    std::cout << this->scoreField()->myGwang.at(i)->isName() << " ";
+  if (size > 0) {
+    std::cout <<std::endl<< "광 : ";
+    for (int i = 0; i < size; i++) {
+      std::cout << this->scoreField()->myGwang.at(i)->isName() << " ";
+    }
   }
-
-  std::cout<<std::endl << "열끗 : ";
-
   size = this->scoreField()->myYeol.size();
-  for (int i = 0; i < size; i++) {
-    std::cout << this->scoreField()->myYeol.at(i)->isName() << " ";
+  if (size > 0) {
+    std::cout << std::endl << "열끗 : ";
+    for (int i = 0; i < size; i++) {
+      std::cout << this->scoreField()->myYeol.at(i)->isName() << " ";
+    }
   }
-  
-  std::cout << std::endl << "단 : ";
   size = this->scoreField()->myRibbon.size();
-  for (int i = 0; i < size; i++) {
-    std::cout << this->scoreField()->myRibbon.at(i)->isName() << " ";
+  if (size > 0) {
+    std::cout << std::endl << "단 : ";
+    for (int i = 0; i < size; i++) {
+      std::cout << this->scoreField()->myRibbon.at(i)->isName() << " ";
+    }
   }
-  
-  std::cout << std::endl << "피 : ";
-  size = this->scoreField()->mySsangP.size();  // 쌍피
-  for (int i = 0; i < size; i++) {
-    std::cout << this->scoreField()->mySsangP.at(i)->isName() << " ";
+  size = this->scoreField()->mySsangP.size() +
+         this->scoreField()->myP.size();  // 쌍피 + 피 개수
+  if (size > 0) {
+    size = this->scoreField()->mySsangP.size();
+    std::cout << std::endl << "피 : ";
+    for (int i = 0; i < size; i++) {
+      std::cout << this->scoreField()->mySsangP.at(i)->isName() << " ";
+    }
+    size = this->scoreField()->myP.size();  // 그냥 피
+    for (int i = 0; i < size; i++) {
+      std::cout << this->scoreField()->myP.at(i)->isName() << " ";
+    }
   }
-  size = this->scoreField()->myP.size();  // 그냥 피
-  for (int i = 0; i < size; i++) {
-    std::cout << this->scoreField()->myP.at(i)->isName() << " ";
-  }
+
   
   std::cout << std::endl;
 }
